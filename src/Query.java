@@ -28,7 +28,7 @@ public class Query {
 	public static final String addAdminPost_query = "insert into admin_posts values (?,?)"; // adminid postid
 	
 	/** Get Posts**/
-	public static final String getPosts_query = "select * from posts,post_topics where post_id = post_topics and post_topics in "; //Expand 
+	public static final String getPosts_query = "select * from posts,post_topics where posts.post_id = post_topics.post_id and post_topics.topic_name in "; //Expand 
 	
 	/** User Specific **/
 	public static final String UserInfo_query = "select * from users where user_id = (?)";

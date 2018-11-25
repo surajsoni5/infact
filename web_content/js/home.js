@@ -1,9 +1,30 @@
 var start  = "localhost:8080/Infact/";
+var r1 =
+	`<div class = "row Mypost-row"> 
+    <div class="col-sm-1"> </div> 
+    <div class="col-sm-9 "> 
+      <div class="row Mypost-main" > 
+          <div class="col-sm-5 "> \
+            <div class = "Mypost-image"> 
+                <img src="./images/login/login_back.jpg" alt="Italian Trulli">
+            </div> 
+          </div> 
+          <div class="col-sm-7"> 
+            <div class="Mypost-title">`;
+             
+var r2 = `</div>
+            <div class="Mypost-body">`;
+var r3 =
+           ` </div> 
+          </div>
+      </div> `;
 
 $(document).ready(function () {
 	
+	console.log("User Topics: " + Cookies.get('user_topics'));
 	// If user_topics doesn't exists;
-	if(Cookies.get('user_topics') == 'undefined'){
+//	Cookies.clear('user_topics');
+	if(Cookies.get('user_topics') == undefined){
 		$.ajax({
 	        url:'getUserTopics',
 	        type:'get',
@@ -14,7 +35,13 @@ $(document).ready(function () {
 	        		    alert("No User Topics") 
 	        		    // TODO: Add Model ( pop-up to select topics )
 	        		}else {
-	        			Cookies.set('user_topics', data);
+	        			var usertopic = data;
+	        			for (var i = 0; i < data.length; i++) {
+	        				usertopic[i] = data[i].topic_name;
+	        			} 
+	        			console.log(" New "+ JSON.stringify(usertopic));
+	        			Cookies.set('user_topics', JSON.stringify(usertopic));
+	        			
 	        		}
 	        	}
 	        }
@@ -22,50 +49,39 @@ $(document).ready(function () {
 	}
 	
 	LoadPosts(2);
+	
+	
+	
 });
 
 function LoadPosts(limit){
+	$("#UserPosts").empty();
 	
-	var userTopics = Cookies.get('user_topics');
-	console.log("user_topics");
-	var postdata = new FormData();
-	postdata.append("limit",limit);
-	postdata.append("user_topics",userTopics);
-    
+	var userTopics = JSON.parse(Cookies.get('user_topics'));
+	
+	var postdata = {
+    	'limit': limit,
+    	'user_topics': JSON.stringify(userTopics)
+    };
+	console.log(postdata);
+	console.log("Load " + userTopics);
     $.post(
         'getPosts',
-        {
-        	limit: limit,
-        	user_topics: userTopics
-        	
-        }, 
+        postdata
+        , 
        function(response,status){
-        	if(status== "success"){
+        	if(status== "success" && response.status == true){
         		console.log(response); 	
+        		var data = response.data;
+        		var len = data.length;
+        		for(var i =0 ;i<len;i++){
+        			var r = r1 + data[i].title + r2 + data[i].body + r3; 
+        			$("#UserPosts").append(r);
+        		}
         	}
         	
         }
     );
     
-	var r =  `<div class = "row Mypost-row"> 
-              <div class="col-sm-1"> </div> 
-              <div class="col-sm-9 "> 
-                <div class="row Mypost-main" > 
-                    <div class="col-sm-5 "> \
-                      <div class = "Mypost-image"> 
-                          <img src="./images/login/login_back.jpg" alt="Italian Trulli">
-                      </div> 
-                    </div> 
-                    <div class="col-sm-7"> 
-                      <div class="Mypost-title">
-                        We made it Check the first post ever created !!
-                      </div>
-                      <div class="Mypost-body">
-                          Material is an adaptable system of guidelines, components,
-                           and tools that support the best practices of user interface design. 
-                           Backed by open-source code, Material streamlines collaboration between 
-                           designers and developers, and helps teams quickly build beautiful products.
-                      </div> 
-                    </div>
-                </div> `;
+	
 }

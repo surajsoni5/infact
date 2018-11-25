@@ -12,7 +12,12 @@
   <script src="./js/Cookies.js"></script>
    <script src="./js/home.js"></script>
 </head>
+
 <body>
+<c:if test="${userid != null}">
+  <p>Welcome, ${user.name}</p>
+</c:if>
+
         <!-- Grey with black text -->
         <!-- Navigation Bar -->
         <nav class="navbar  fixed-top navbar-expand-lg navbar-light Mynav" >
@@ -65,7 +70,7 @@
                 </div>
               </nav>
       <!-- users Posts -->
-      <div class= "container-fluid UserPosts">
+      <div class= "container-fluid UserPosts" id="UserPosts">
         <div class = "row Mypost-row">
           <div class="col-sm-1"> </div>
           <div class="col-sm-9 "> 

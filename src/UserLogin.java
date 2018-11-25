@@ -53,15 +53,15 @@ public class UserLogin extends HttpServlet {
         response.setHeader("Access-Control-Allow-Origin", "*");
 		HttpSession session = request.getSession();
 
-		Map<String, Object> jsonMap = mapper.readValue(request.getInputStream(),
-			    new TypeReference<Map<String,Object>>(){});
-		
-//		String emailid = request.getParameter("email_id");
-//		String password = request.getParameter("password");
-		String emailid = jsonMap.get("email_id").toString();
-		String password = jsonMap.get("password").toString();
-		
-		System.out.println( jsonMap.toString() + " Json");
+//		Map<String, Object> jsonMap = mapper.readValue(request.getInputStream(),
+//			    new TypeReference<Map<String,Object>>(){});
+//		
+		String emailid = request.getParameter("email_id");
+		String password = request.getParameter("password");
+//		String emailid = jsonMap.get("email_id").toString();
+//		String password = jsonMap.get("password").toString();
+//		
+//		System.out.println( jsonMap.toString() + " Json");
 		System.out.println( emailid + " Email");
 		System.out.println( password + " PassMy");
 		
