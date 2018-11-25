@@ -1,0 +1,148 @@
+
+@import url("base.css");
+.navbar-nav {
+    height: 100%;
+}
+.nav-item{
+    z-index: 100;
+}
+.dropdown-item{
+    z-index: 100;
+}
+div{
+    /* height:inherit;
+    width: inherit; */
+}
+
+img{
+    /* height: 80rh; */
+    /* margin: auto; */
+    /* vertical-align: middle; */
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    height: 40vh;
+    width: 90%;
+    
+    
+}
+
+.UserPosts {
+    /* display: none; */
+    margin-top: 5%;
+}
+
+.VolunteerPosts{
+    display: none;
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-top: 5%;
+    
+}
+
+.Mynav {
+    font-family: Poppins-Regular;
+    background-color:  #7CB342;
+    height: 7vh;
+}
+
+.Mynavend {
+    height: 90%;
+    width: max-content
+}
+
+.Mynavbtn {
+    border-radius: 5pt;
+    height: 90%;
+    margin: 0%;
+    padding: 0%;
+    background-color: #7CB342;
+    /* color: black; */
+    color: #33691E;
+    width: 100%;
+}
+.Mynavbtn:hover {
+    background-color: #689F38 ;
+    /* color:#33691E; */
+    color: black;
+    /* box-shadow: #33691E; */
+    /* box-shadow: 0.2vw 0.2    vw #33691E; */
+}
+
+.Mypost-image{
+    height: 100%;
+}
+.Mypost-title{
+    height: 20%;
+    margin: auto;
+    font-weight: bold;
+    font-size: 1.5vw;
+}
+.Mypost-body{
+    height: 60%;
+}
+.options {
+    height: 100%;
+}
+.Mypost-row{
+    height: fit-content;
+    margin: 0.5%;
+}
+
+.Mypost-main{
+    margin: 2%;
+    padding: 2%;
+    /* box-shadow: 1vw 1vw lightgray; */
+    border-radius: 1vw;
+    background-color: ghostwhite;
+}
+
+.Mypost-:hover{
+    box-shadow: 2% 2% 2% 2% grey;
+}
+
+.post-img {
+    margin-top: 5%;
+    height: fit-content;
+    width: fit-content;
+    max-width: 90vw;
+    max-height: 80vh;
+    
+    margin-bottom: 5%;
+}
+
+.post-title {
+    padding-bottom: 3%;
+    padding-top: 3%;
+    margin: auto;
+    font-weight: bold;
+    font-size: 2vw;
+}
+
+.post-body {
+    padding-bottom: 5%; 
+}
+
+.vol-submit { 
+    /* position: absolute; */
+    bottom: 0;
+    left:0;
+    height:10vh;
+    margin-top: 2%;
+    /* padding-top: 10%; */
+    width:100%;
+    border-radius: 0;
+}
+
+.post-comment {
+    /* bottom: 0; */
+    background-color: lightgray;
+    font-size: 1.5vw;
+    left:0;
+    height:8vh;
+    margin-top: 3%;
+    /* padding-top: 10%; */
+    width:100%;
+    border-radius: 0;
+}

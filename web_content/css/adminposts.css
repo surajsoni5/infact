@@ -1,0 +1,28 @@
+@import url("posts.css");
+
+.stat-text {
+    /* margin-top: 10%; */
+    font-weight: 600;
+    padding: 5%;
+    font-size: 1.1vw;
+    margin: auto;
+}
+
+.stat-ans {
+    padding: 3%;
+    /* margin: auto; */
+    align-self: center;
+    font-size: 1.1vw;
+}
+
+.fixed{
+    position: fixed;
+}
+
+.stat-con {
+    padding: 10%;
+    
+    font-size: 1.1vw;
+    margin : auto;
+    margin-top: 10%;
+}
