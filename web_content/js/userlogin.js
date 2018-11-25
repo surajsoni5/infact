@@ -8,31 +8,47 @@ $(document).ready(function () {
             if(email==null || pwd ==null){
                 alert("Email and Password should be non empty")
             }else   
-            xhttp = new XMLHttpRequest();
-              xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    
-                    var msg_status = JSON.parse(this.responseText).status;
-                    console.log(msg_status);
-                    if(msg_status == true){  
-                    	console.log("Login Sucessfull ");
-                    	
-                    	window.location = window.location.protocol + '//' + (start+"home.html");
-                    }
-                    else { alert("Failed to to Login");}
-                }else{
-                    console.log("Login Failed: "+this.responseText +this.status + " "+ this.readyState);
-                }
-              };
-              var endpoint = "UserLogin";
-              //console.log(endpoint);
-              var data = {
-                  'email_id' : email,
-                  'password' : pwd
-              };
-              xhttp.open("POST",endpoint , true);
-              xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-              xhttp.send(JSON.stringify(data));
+            	
+            $.post("UserLogin",
+            		{
+                'email_id' : email,
+                'password' : pwd
+            },function (response,status){
+//            	console.log(response);
+            	if(status == 'success' && response.status == true){
+            		console.log("Login Sucessfull ");
+                	
+                	window.location = window.location.protocol + '//' + (start+"home.html");
+            	}else {
+            		console.log("Login Failed: "+response);
+            	}
+            }
+            		);
+//            xhttp = new XMLHttpRequest();
+//              xhttp.onreadystatechange = function() {
+//                if (this.readyState == 4 && this.status == 200) {
+//                    
+//                    var msg_status = JSON.parse(this.responseText).status;
+//                    console.log(msg_status);
+//                    if(msg_status == true){  
+//                    	console.log("Login Sucessfull ");
+//                    	
+//                    	window.location = window.location.protocol + '//' + (start+"home.html");
+//                    }
+//                    else { alert("Failed to to Login");}
+//                }else{
+//                    console.log("Login Failed: "+this.responseText +this.status + " "+ this.readyState);
+//                }
+//              };
+//              var endpoint = "UserLogin";
+//              //console.log(endpoint);
+//              var data = {
+//                  'email_id' : email,
+//                  'password' : pwd
+//              };
+//              xhttp.open("POST",endpoint , true);
+//              xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+//              xhttp.send(JSON.stringify(data));
         });
         
         
