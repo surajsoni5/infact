@@ -140,6 +140,7 @@ public class DbHelper {
 	 */
 	protected static String executeAtomicUpdateJson(String[] updateQuery, ParamType[] paramTypes[], Object[] params[]) {
 		ArrayList<Integer> res = new ArrayList<Integer>();
+		int recordsUpdated=0;
     	try (Connection conn = DriverManager.getConnection(Config.url, Config.user, Config.password))
         {
 			conn.setAutoCommit(false);
