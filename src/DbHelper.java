@@ -134,52 +134,6 @@ public class DbHelper {
     	return node.toString();
     }
 
-	/**
-	 * Returns number of records updated in JSON format
-	 * { "value" : <number of records updated> }
-	 */
-	protected static String executeAtomicUpdateJson(String[] updateQuery, ParamType[] paramTypes[], Object[] params[]) {
-		ArrayList<Integer> res = new ArrayList<Integer>();
-    	try (Connection conn = DriverManager.getConnection(Config.url, Config.user, Config.password))
-        {
-			conn.setAutoCommit(false);
-			try {
-				for(int i = 0; i < updateQuery.length;i++){
-					try(PreparedStatement stmt = conn.prepareStatement(updateQuery[i])) {
-						setParams(stmt, paramTypes[i], params[i]);
-						recordsUpdated = stmt.executeUpdate();
-						res.add(recordsUpdated);
-					} catch(Exception ex){
-						conn.rollback();
-						throw ex;
-					}
-				}
-				conn.commit();
-			} 
-			catch (Exception ex) {
-				conn.rollback();
-				throw ex;
-			}
-			finally{
-				conn.setAutoCommit(true);
-			}	
-		} 
-		catch (Exception e) {
-            return errorJson(e.getMessage()).toString();
-		}
-		boolean status = true;
-		for(int i = 0; i < res.size(); i++){
-			if(res.get(i) == 0){
-				status = false;
-				System.out.println("Failed query is " + i + " in Atomic Batch Update");
-				break;
-			}
-		}
-    	ObjectNode node = mapper.createObjectNode();
-    	node.put(STATUS_LABEL, status);
-    	return node.toString();
-    }
-
 	private static void setParams(PreparedStatement stmt,
 			ParamType[] paramTypes, 
 			Object[] params) throws SQLException {
