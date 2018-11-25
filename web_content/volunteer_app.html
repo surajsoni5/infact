@@ -11,21 +11,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="./js/volunteer_app.js"></script>
 </head>
-<script>
-    function but() {
-        var chk_arr = document.getElementsByName("type");
-        var chklength = chk_arr.length;
-        console.log(chk_arr)
-        for (k = 0; k < chklength; k++) {
-            console.log(chk_arr[k].checked)
-        }
-    }
-</script>
-
 <body>
     <!-- Button trigger modal -->
-
 
     <!-- Modal -->
     <div class="modal fade" id="tags" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -49,32 +38,17 @@
 
                     </div>
                     <!--end of col-->
-                
-                <label><input type="checkbox" name="type" value="1111" /> fafa </label>
-                <label><input type="checkbox" name="type" value="111" /> fafa </label>
-                <label><input type="checkbox" name="type" value="1111" /> fafa </label>
-                <label><input type="checkbox" name="type" value="1111" /> fafa </label>
-                <label><input type="checkbox" name="type" value="1111" /> fafa </label>
-                <label><input type="checkbox" name="type" value="1111" /> fafa </label>
-                <label><input type="checkbox" name="type" value="1111" /> fafa </label>
-                <label><input type="checkbox" name="type" value="1111" /> fafa </label>
-                <label><input type="checkbox" name="type" value="1111" /> fafa </label>
-                <label><input type="checkbox" name="type" value="1111" /> fafa </label>
-                <label><input type="checkbox" name="type" value="1111" /> fafa </label>
-                <label><input type="checkbox" name="type" value="1111" /> fafa </label>
-                <label><input type="checkbox" name="type" value="1111" /> fafa </label>
-                <label><input type="checkbox" name="type" value="1111" /> fafa </label>
-                <label><input type="checkbox" name="type" value="1111" /> fafa </label>
-                <label><input type="checkbox" name="type" value="1111" /> fafa </label>
-                <label><input type="checkbox" name="type" value="1111" /> fafa </label>
-                <label><input type="checkbox" name="type" value="1111" /> fafa </label>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                    <div id="tags_list">
+                        <!-- <label><input type="checkbox" name="type" value="1111" /> fafa </label> -->
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
             </div>
         </div>
-    </div>
     </div>
     <div class="container " style="padding-top:1% ">
         <div class="row">
@@ -95,7 +69,7 @@
                                     <span for="sop" class="label-input">SOP</span>
                                 </div>
                                 <div class="col-sm-12">
-                                    <textarea type="text" id="form24" class="md-textarea form-control" rows="5"></textarea>
+                                    <textarea type="text" id="sop" class="md-textarea form-control" rows="5"></textarea>
                                 </div>
                                 <!-- </div> -->
                             </div>
@@ -109,7 +83,7 @@
                                     <div class="col-sm-4"></div>
                                     <div class="col-sm-5">
                                         <button class="Mybtn" onclick="but()">
-                                            Login
+                                            submit
                                         </button>
                                     </div>
                                     <div class="col-sm-3"></div>
