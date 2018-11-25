@@ -1,4 +1,4 @@
-var start  = "localhost:8080/Servlets/";
+var start  = "localhost:8080/Infact/";
 $(document).ready(function () {
     var xhttp;
         $("#LoginButton").click(function () {

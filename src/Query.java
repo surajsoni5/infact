@@ -22,11 +22,13 @@ public class Query {
 	//public static final String removeVolunteerTopic_query = "delete from volunteer_topics where topic_name = (?) and user_id = (?)";
 	
 	/** Adding Posts**/
-	public static final String getPost_query = "select * from posts where post_id = (?)"; 
+	public static final String getPostID_query = "select * from posts where post_id = (?)"; 
 	public static final String addPost_query = "insert into posts values (DEFAULT,now(),?,?,?,?) returning post_id"; // Image body title author_name
 	public static final String addUserPost_query = "insert into user_posts values (?,?)"; // user_id postid
 	public static final String addAdminPost_query = "insert into admin_posts values (?,?)"; // adminid postid
 	
+	/** Get Posts**/
+	public static final String getPosts_query = "select * from posts,post_topics where post_id = post_topics and post_topics in "; //Expand 
 	
 	/** User Specific **/
 	public static final String UserInfo_query = "select * from users where user_id = (?)";
