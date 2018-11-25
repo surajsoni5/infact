@@ -1,6 +1,7 @@
 drop table responses;
 drop table user_topics;
 drop table rejected_posts;
+drop table application_topics;
 drop table applications;
 drop table volunteer_topics;
 drop table post_topics;

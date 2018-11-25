@@ -125,6 +125,15 @@ create table volunteer_topics
      foreign key (topic_name) references topics
         on delete set null
     );
+create table application_topics
+    (user_id        BIGINT,
+     topic_name         varchar(50),
+     primary key (user_id,topic_name),
+     foreign key (user_id) references applications
+		on delete cascade,
+     foreign key (topic_name) references topics
+        on delete set null
+    );
 
 create table responses
     (post_id        BIGINT,

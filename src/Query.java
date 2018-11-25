@@ -95,4 +95,12 @@ public class Query {
 	public static final String getApplication = "select * from applications limit (?) order by requested_timestamp";
 	public static final String GetPosts_query = "select * from posts where post_id in ";
 	
+	// Get Tags
+	public	static final String getTags= "select * from topics";
+	
+	// Add volunteers 
+	
+	public static final String addVolunteer = "insert into applications values (?,?,?)";
+	public static final String addVolunteer_topics = "insert into application_topics values (?,?)";
+	
 }
