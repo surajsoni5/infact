@@ -148,7 +148,7 @@ public class addPost extends HttpServlet {
 			 }
 			 
 			 response.getWriter().print(json);
-			 
+			 response.setContentType("application/json;charset=UTF-8");
 		 }
 	}
 
