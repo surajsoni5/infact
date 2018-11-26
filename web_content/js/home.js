@@ -64,7 +64,7 @@ function LoadPosts(limit){
 	
 	var postdata = {
     	'limit': limit,
-    	'user_topics': JSON.stringify(userTopics)
+//    	'user_topics': JSON.stringify(userTopics)
     };
 	console.log(postdata);
 	console.log("Load " + userTopics);

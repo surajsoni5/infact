@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +31,7 @@ public class DbHelper {
 		STRING,
 		INT,
 		BYTEA,
+		TIMESTAMP,
 	}
 	
 	/**
@@ -200,6 +202,8 @@ public class DbHelper {
 				
 				List<Object> bytea = (List)param;
 				stmt.setBinaryStream(i+1,(InputStream) bytea.get(0),(Integer)bytea.get(1));
+			}else if(type.equals(ParamType.TIMESTAMP)) {
+				stmt.setTimestamp(i+1,(Timestamp) param);
 			}
 		}
 	}

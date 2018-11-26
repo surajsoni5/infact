@@ -14,8 +14,8 @@ $(document).ready(function () {
                 email_id : email,
                 password : pwd
             },function (response,status){
-//            	console.log(response);
-            	if(status == 'success' && JSON.parse(response).status){
+//            	console.log(response.status);
+            	if(status == 'success' && response.status){
             		console.log("Login Sucessfull ");
                 	
                 	window.location = window.location.protocol + '//' + (start+"home.html");

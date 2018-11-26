@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -62,7 +63,7 @@ public class getPosts extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		boolean isUser = true;
+		
 		int id = -1;
 		
 		if(session.getAttribute("userid") == null) {
@@ -71,38 +72,40 @@ public class getPosts extends HttpServlet {
 			id = (int) session.getAttribute("userid");
 		}
 		
-		String usertopics = request.getParameter("user_topics");
-		String limit = request.getParameter("limit");
-		JSONParser parser = new JSONParser();
-		try {
-			JSONArray usertopicsList = (JSONArray) parser.parse(usertopics);
-			String query = Query.getPosts_query + "( ";
-			int len = usertopicsList.size();
-			for(int i = 0;i < len;i++) {
-				if(i == len - 1 ) {
-					query += "\'" + usertopicsList.get(i).toString() + "\' ) ";
-				}else {
-					query += "\'" + usertopicsList.get(i).toString() + "\' , ";
-				}
-				
-			}
-			query += " limit " + limit  ;
+//		String usertopics = request.getParameter("user_topics");
+//		System.out.println(request.getParameter("limit"));
+		int limit = (int) Integer.parseInt(request.getParameter("limit"));
+		
+		limit  = (Config.postlimit>limit)? limit:Config.postlimit;
+//		System.out.println(limit);
+//		JSONParser parser = new JSONParser();
+
+//			JSONArray usertopicsList = (JSONArray) parser.parse(usertopics);
+//			String query = Query.getPosts_query + "( ";
+//			int len = usertopicsList.size();
+//			for(int i = 0;i < len;i++) {
+//				if(i == len - 1 ) {
+//					query += "\'" + usertopicsList.get(i).toString() + "\' ) ";
+//				}else {
+//					query += "\'" + usertopicsList.get(i).toString() + "\' , ";
+//				}
+//				
+//			}
+//			query += " limit " + limit  ;
 			
 
-			String json = DbHelper.executeQueryJson(query,
-					new DbHelper.ParamType[] {},
-					new Integer[] {});
-		
-			System.out.println(query);
+			String json = DbHelper.executeQueryJson(Query.getPosts_query,
+					new DbHelper.ParamType[] {DbHelper.ParamType.TIMESTAMP,DbHelper.ParamType.INT,DbHelper.ParamType.INT},
+					new Object[] { (Object) new Timestamp(System.currentTimeMillis()), id,limit});
+			System.out.println(id + " "+ limit);
 			response.getWriter().print(json);
 			response.setContentType("application/json;charset=UTF-8");
 			 
-		} catch (ParseException e) {
-			System.out.println("Error in Parsing" + e);
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		
+	}
+
+	private Integer min(int postlimit, Integer limit) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

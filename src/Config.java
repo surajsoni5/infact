@@ -6,7 +6,7 @@ public class Config {
 	public static final String url = "jdbc:postgresql://localhost:5432/Infact";
 	public static final String user = "postgres";
 	public static final String password = "7410";
-	
+	public static final int postlimit = 10;
 }
 
 /*

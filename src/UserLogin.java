@@ -14,6 +14,9 @@ import javax.servlet.http.HttpSession;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 
 /**
  * Servlet implementation class LoginServlet
@@ -65,6 +68,9 @@ public class UserLogin extends HttpServlet {
 		System.out.println( emailid + " Email");
 		System.out.println( password + " PassMy");
 		
+		ArrayNode data = mapper.createArrayNode();
+		ObjectNode isVolunteer = mapper.createObjectNode();
+		ObjectNode isApplication = mapper.createObjectNode();
 		
 		List<List<Object>> res = DbHelper.executeQueryList(Query.UserLogin_query, 
 				new DbHelper.ParamType[] {DbHelper.ParamType.STRING}, 
@@ -88,9 +94,14 @@ public class UserLogin extends HttpServlet {
 			if(dbPass1 != -1 && dbPass1==userid) {
 				session.setAttribute("isVolunteer", true);
 				session.setAttribute("isApplication", false);
+				
+				isVolunteer.put("isVolunteer", true);
+				isApplication.put("isApplication", true);
 				System.out.println("He is a Voluteer");
 			}else {
 				session.setAttribute("isVolunteer", false);
+				isVolunteer.put("isVolunteer", false);
+				
 				
 				res =  DbHelper.executeQueryList(Query.isApplication_query, 
 						new DbHelper.ParamType[] {DbHelper.ParamType.INT}, 
@@ -98,16 +109,21 @@ public class UserLogin extends HttpServlet {
 				dbPass1 = res.isEmpty()? -1 : (Long)res.get(0).get(0);
 				if(dbPass1 != -1 && dbPass1==userid) {
 					session.setAttribute("isApplication", true);
+					isApplication.put("isApplication", true);
 					System.out.println("He Applied for Voluteer");
 				}else {
 					session.setAttribute("isApplication", false);
+					isApplication.put("isApplication", false);
 					System.out.println("He is just a User");
 				}
 			}
 			
 			ObjectNode ret = DbHelper.okJson();
-			
-			response.getWriter().print(DbHelper.okJson().toString());
+			data.add(isVolunteer);
+			data.add(isApplication);
+			ret.putArray(DbHelper.DATA_LABEL).addAll(data); 
+			System.out.println(ret.toString());
+			response.getWriter().print(ret.toString());
 			
 		}
 		else {
