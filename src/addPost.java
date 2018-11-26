@@ -83,7 +83,7 @@ public class addPost extends HttpServlet {
 		int  filelen=(int) filePart.getSize();
 		InputStream fileContent = filePart.getInputStream();
 		
-		System.out.println("Add Post: Image File Name " + fileName);
+		System.out.println("Add Post: Image File Name " + fileName.substring(fileName.length()-3));
 		System.out.println("Add Post: Image File Path " + p);
 		System.out.println("Add Post: Image File Size " + filelen);
 		
@@ -119,8 +119,8 @@ public class addPost extends HttpServlet {
 		bytea.add(filelen);
 		
 		String json =  DbHelper.executeQueryJson(Query.addPost_query, 
-				new DbHelper.ParamType[] {DbHelper.ParamType.BYTEA, DbHelper.ParamType.STRING,DbHelper.ParamType.STRING,DbHelper.ParamType.STRING}, 
-				new Object[] {bytea,body,title,author_name});
+				new DbHelper.ParamType[] {DbHelper.ParamType.BYTEA,DbHelper.ParamType.STRING, DbHelper.ParamType.STRING,DbHelper.ParamType.STRING,DbHelper.ParamType.STRING}, 
+				new Object[] {bytea,fileName.substring(fileName.length()-3).toLowerCase(),body,title,author_name});
 		
 		Map<String, Object> jsonRes = mapper.readValue(json,
 			    new TypeReference<Map<String,Object>>(){});

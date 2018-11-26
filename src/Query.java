@@ -23,7 +23,7 @@ public class Query {
 	
 	/** Adding Posts**/
 	public static final String getPostID_query = "select * from posts where post_id = (?)"; 
-	public static final String addPost_query = "insert into posts values (DEFAULT,now(),?,?,?,?) returning post_id"; // Image body title author_name
+	public static final String addPost_query = "insert into posts values (DEFAULT,now(),?,?,?,?,?) returning post_id"; // Image body title author_name
 	public static final String addUserPost_query = "insert into user_posts values (?,?)"; // user_id postid
 	public static final String addAdminPost_query = "insert into admin_posts values (?,?)"; // adminid postid
 	
