@@ -2,23 +2,27 @@ var start  = "localhost:8080/Infact/";
 
 var r1 = ` <div class = "row Mypost-row">
 <div class="col-lg-1"> </div>
-<div class="col-lg-10 Mypost-main"> 
-  <div class="row Mypost-submain" >
-   <div class = "row">
+<div class="col-lg-10 Mypost-main">
+<div class="row Mypost-submain" >
+<div class = "row"> `;
+
+var r2 = `
       <div class="col-lg-5 "> 
         <div class = " Mypost-image"> `
             
-var r2=  ` </div>
+var r3=  ` </div>
       </div>
       <div class="col-lg-7"> 
         <div class=" Mypost-title">`
          
- var r3 =       ` </div>
+ var r4 =       ` </div>
         <div class=" Mypost-body">`;
               
-var r4 = ` </div> 
-			</div>
-      </div>
+var r5 = ` </div> 
+			
+      `;
+var r6 = `</div>
+		</div>
       <div class="row User-Option-row">
       	 <button class = "Mybtn Like_Post" type="button" id="Like_Post" > Like </button>
       	 <button class = "Mybtn Save_Post" type="button" id="Save_Post" > Save </button>
@@ -149,23 +153,44 @@ function Logout(){
 function viewFunction(but){
 	console.log("F: viewing post");
 //	but.parent.clear();
+	console.log(but.attributes.value.nodeValue);
+	if(but.attributes.value.nodeValue == "small"){
+		console.log("Expanding");
+		var ParentNode = but.parentNode.parentNode.children[0];
+		
+		var image = ParentNode.children[0].children[0];
+		var post_title = ParentNode.children[1].children[0];
+		var post_body = ParentNode.children[1].children[1];
+//		ParentNode.hidden = true;
+		ParentNode.innerHTML = "";
+		ParentNode.appendChild(image);
+		ParentNode.appendChild(post_title);
+		ParentNode.appendChild(post_body);
+		ParentNode.style.display = "block";
+		but.attributes.value.nodeValue="large";
+		but.innerHTML = "Collapse";
+		
+
+//		console.log(ParentNode);
+	//	
+	}else {
+		var ParentNode = but.parentNode.parentNode.children[0];
+		 ParentNode.style.display = "flex";
+		var image = ParentNode.children[0];
+		var post_title = ParentNode.children[1];
+		var post_body = ParentNode.children[2];
+		console.log(image.innerHTML);
+		ParentNode.innerHTML = 
+			r2 + image.innerHTML +
+			 r3 + post_title.innerHTML + r4 + post_body.innerHTML + r5; 
+		console.log(ParentNode.parentNode);
+		$('html, body').animate({ scrollTop: ParentNode.parentNode.parentNode.offsetTop - 100}, 'slow');
+		
+		but.attributes.value.nodeValue="small";
+		but.innerHTML = "View";
+	}
+//	if(ParentNode)
 	
-	var ParentNode = but.parentNode.parentNode.children[0];
-	
-	var image = ParentNode.children[0].children[0];
-	var post_title = ParentNode.children[1].children[0];
-	var post_body = ParentNode.children[1].children[1];
-//	ParentNode.hidden = true;
-	ParentNode.innerHTML = "";
-	ParentNode.appendChild(image);
-	ParentNode.appendChild(post_title);
-	ParentNode.appendChild(post_body);
-	ParentNode.style.display = "block";
-//	ParentNode.children[0] = image;
-//	ParentNode.children[1] = post_title;
-//	ParentNode.children[2] = post_body;
-//	
-	console.log(ParentNode);
 //	console.log(image);
 //	console.log(post_title);
 //	console.log(post_body);
@@ -194,9 +219,9 @@ function LoadPosts(limit){
         		var data = response.data;
         		var len = data.length;
         		for(var i =0 ;i<len;i++){
-        			var r = r1 + 
+        			var r = r1 + r2 +
         			` <img src= "` + `getPostImage?post_id=` + data[i].post_id +`" id="image" alt=" `+ " Image" +  ` "> ` +
-        			 r2 + data[i].title + r3 + data[i].body + r4; 
+        			 r3 + data[i].title + r4 + data[i].body + r5 + r6; 
         			$("#UserPosts").append(r);
         		}
         	}
