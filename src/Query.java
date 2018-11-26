@@ -28,8 +28,8 @@ public class Query {
 	public static final String addAdminPost_query = "insert into admin_posts values (?,?)"; // adminid postid
 	
 	/** Get Posts**/
-	public static final String getPosts_query = "select * from posts,post_topics where posts.post_id = post_topics.post_id and post_topics.topic_name in "; //Expand 
-	
+	public static final String getPosts_query = "select posts.post_id,posts.created_timestamp,posts.image,posts.body,posts.title,posts.author_name from posts,post_topics where posts.post_id = post_topics.post_id and post_topics.topic_name in "; //Expand 
+	public static final String getPostImage_query = "select image from posts where post_id = (?)";
 	/** User Specific **/
 	public static final String UserInfo_query = "select * from users where user_id = (?)";
 	public static final String UserSavedPosts_query = "select post_id from user_post_info where user_id = (?) and saved = TRUE";

@@ -71,7 +71,6 @@ public class getPosts extends HttpServlet {
 			id = (int) session.getAttribute("userid");
 		}
 		
-		System.out.println(" Request: " + request.toString());
 		String usertopics = request.getParameter("user_topics");
 		String limit = request.getParameter("limit");
 		JSONParser parser = new JSONParser();
@@ -89,7 +88,28 @@ public class getPosts extends HttpServlet {
 			}
 			query += " limit " + limit  ;
 			
-			ResultSet rs = null;
+
+			String json = DbHelper.executeQueryJson(query,
+					new DbHelper.ParamType[] {},
+					new Integer[] {});
+		
+			System.out.println(query);
+			response.getWriter().print(json);
+			response.setContentType("application/json;charset=UTF-8");
+			 
+		} catch (ParseException e) {
+			System.out.println("Error in Parsing" + e);
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+	}
+
+}
+
+
+/** 
+ * ResultSet rs = null;
 			
 			try (Connection conn = DriverManager.getConnection(Config.url, Config.user, Config.password))
 	        {
@@ -110,7 +130,8 @@ public class getPosts extends HttpServlet {
 	                        response.getOutputStream().write(content);
 	                	}
 	                res.add(row);
-	                response.getOutputStream().write(row);
+	                
+//	                response.getOutputStream().write(2);
 	    			response.setContentType("application/json;charset=UTF-8");
 	    			
 	                }
@@ -128,30 +149,4 @@ public class getPosts extends HttpServlet {
 	            e.printStackTrace();
 	        }
 	    	
-	    	
-			
-			
-			
-//			String json = DbHelper.executeQueryJson(query,
-//					new DbHelper.ParamType[] {},
-//					new Integer[] {});
-//		
-			System.out.println(query);
-			
-			
-			
-			
-		} catch (ParseException e) {
-			System.out.println("Error in Parsing" + e);
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		
-		
- 
-		
-	
-		 
-	}
-
-}
+	    	**/

@@ -1,23 +1,24 @@
 var start  = "localhost:8080/Infact/";
-var r1 =
-	`<div class = "row Mypost-row"> 
-    <div class="col-sm-1"> </div> 
-    <div class="col-sm-9 "> 
-      <div class="row Mypost-main" > 
-          <div class="col-sm-5 "> \
-            <div class = "Mypost-image"> 
-                <img src="./images/login/login_back.jpg" alt="Italian Trulli">
-            </div> 
-          </div> 
-          <div class="col-sm-7"> 
-            <div class="Mypost-title">`;
-             
-var r2 = `</div>
-            <div class="Mypost-body">`;
-var r3 =
-           ` </div> 
-          </div>
-      </div> `;
+
+var r1 = ` <div class = "row Mypost-row">
+<div class="col-sm-1"> </div>
+<div class="col-sm-9 "> 
+  <div class="row Mypost-main" >
+      <div class="col-sm-5 "> 
+        <div class = "Mypost-image"> `
+            
+var r2=  ` </div>
+      </div>
+      <div class="col-sm-7"> 
+        <div class="Mypost-title">`
+         
+ var r3 =       ` </div>
+        <div class="Mypost-body">`;
+              
+var r4 = ` </div> 
+      </div>
+  </div> `
+
 
 $(document).ready(function () {
 	
@@ -75,7 +76,9 @@ function LoadPosts(limit){
         		var data = response.data;
         		var len = data.length;
         		for(var i =0 ;i<len;i++){
-        			var r = r1 + data[i].title + r2 + data[i].body + r3; 
+        			var r = r1 + 
+        			` <img src= "` + `getPostImage?post_id=` + data[i].post_id +`" id="image" alt=" `+ " Image" +  ` "> ` +
+        			 r2 + data[i].title + r3 + data[i].body + r4; 
         			$("#UserPosts").append(r);
         		}
         	}
