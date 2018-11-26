@@ -21,13 +21,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 @WebServlet("/getVolunteer")
 public class getVolunteer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-<<<<<<< HEAD
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */ 
-=======
->>>>>>> 672ce6d29fbbd97129da157a4583e74623746133
     public getVolunteer() {
         super();
         // TODO Auto-generated constructor stub
