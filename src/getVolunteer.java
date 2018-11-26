@@ -32,7 +32,7 @@ public class getVolunteer extends HttpServlet {
 		if(session == null || session.getAttribute("userid") == null) {
 			// Redirect
 		}
-		int userid=(int) 1;
+		int userid=(int) session.getAttribute("userid");
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode out = mapper.createObjectNode();
 		
@@ -107,10 +107,10 @@ public class getVolunteer extends HttpServlet {
 					new DbHelper.ParamType[] {DbHelper.ParamType.INT}, 
 					new Object[] {userid});
 			if(!res.isEmpty()) {
-				out.put("Application", true);
+				out.put("isApplication", false);
 				System.out.println("He is a Application");
 			}else {
-				out.put("Application", false);
+				out.put("isApplication", true);
 				System.out.println("He is a not Application");
 			}
 		}

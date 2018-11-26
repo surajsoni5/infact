@@ -99,6 +99,7 @@ public class getPosts extends HttpServlet {
 					new DbHelper.ParamType[] {DbHelper.ParamType.TIMESTAMP,DbHelper.ParamType.INT,DbHelper.ParamType.INT},
 					new Object[] { (Object) new Timestamp(System.currentTimeMillis()), id,limit});
 			System.out.println(id + " "+ limit);
+			System.out.println(json);
 			response.getWriter().print(json);
 			response.setContentType("application/json;charset=UTF-8");
 			 

@@ -129,6 +129,21 @@ function LoadHome(){
 
 
 function LoadVolunteer(){
+	$.post(
+		'getVolunteer',
+		{},
+		function(data,status){
+			if(status!='success'){}//Do something
+			data=JSON.parse(data)
+			if(data.isVolunteer){
+				alert("Application Pending")
+			}else if(data.isApplication){
+				alert("Application Pending")
+			}else{
+				// window.location.replace('volunteer_app.html')
+			}
+		}
+	);
 	$('#UserPosts').hide();
 	$('#VolunteerPosts').show();
 }
