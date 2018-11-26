@@ -21,7 +21,7 @@ $(document).ready(function () {
 	        processData: false,
 	        success:function(data){
 //	        	console.log(data);
-	        	window.location.replace('post.html')
+	        	window.location.replace('home.html')
 //	        	window.location = window.location.protocol + '//' + (start+"posts.html");
 	            alert("Added Post");
 	        }
