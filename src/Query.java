@@ -105,4 +105,7 @@ public class Query {
 	public static final String addVolunteer = "insert into applications values (?,?,?)";
 	public static final String addVolunteer_topics = "insert into application_topics values (?,?)";
 	
+	// Autocomplete
+	public static final String autocomplete_tags="select * from topics where lower(name) similar to ?";
+	
 }
