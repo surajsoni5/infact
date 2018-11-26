@@ -42,19 +42,21 @@ $(document).ready(function () {
 	        			} 
 	        			console.log(" New "+ JSON.stringify(usertopic));
 	        			Cookies.set('user_topics', JSON.stringify(usertopic));
-	        			
+	        			LoadPosts(2);
 	        		}
 	        	}
 	        }
 	    });
+	}else {
+		LoadPosts(2);
 	}
 	
-	LoadPosts(2);
+	
 	
 	
 	
 });
-
+ 
 function LoadPosts(limit){
 	$("#UserPosts").empty();
 	

@@ -105,6 +105,8 @@ public class UserLogin extends HttpServlet {
 				}
 			}
 			
+			ObjectNode ret = DbHelper.okJson();
+			
 			response.getWriter().print(DbHelper.okJson().toString());
 			
 		}

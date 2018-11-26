@@ -117,6 +117,7 @@ public class addPost extends HttpServlet {
 		List<Object> bytea = new ArrayList<>();
 		bytea.add(fileContent);
 		bytea.add(filelen);
+		
 		String json =  DbHelper.executeQueryJson(Query.addPost_query, 
 				new DbHelper.ParamType[] {DbHelper.ParamType.BYTEA, DbHelper.ParamType.STRING,DbHelper.ParamType.STRING,DbHelper.ParamType.STRING}, 
 				new Object[] {bytea,body,title,author_name});
