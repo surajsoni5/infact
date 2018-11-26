@@ -92,7 +92,7 @@ public class UserLogin extends HttpServlet {
 //			ret.putArray(DbHelper.DATA_LABEL).addAll(data); 
 			System.out.println(ret.toString());
 			response.getWriter().print(ret.toString());
-			
+	
 		}
 		else {
 			response.getWriter().print(DbHelper.errorJson("Username/password incorrect").toString());
@@ -100,5 +100,4 @@ public class UserLogin extends HttpServlet {
 		
 		response.setContentType("application/json;charset=UTF-8");
 	}
-
 }
