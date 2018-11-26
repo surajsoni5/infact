@@ -6,15 +6,15 @@ var r1 = ` <div class = "row Mypost-row">
   <div class="row Mypost-submain" >
    <div class = "row">
       <div class="col-lg-5 "> 
-        <div class = "Mypost-image"> `
+        <div class = " Mypost-image"> `
             
 var r2=  ` </div>
       </div>
       <div class="col-lg-7"> 
-        <div class="Mypost-title">`
+        <div class=" Mypost-title">`
          
  var r3 =       ` </div>
-        <div class="Mypost-body">`;
+        <div class=" Mypost-body">`;
               
 var r4 = ` </div> 
 			</div>
@@ -22,7 +22,7 @@ var r4 = ` </div>
       <div class="row User-Option-row">
       	 <button class = "Mybtn Like_Post" type="button" id="Like_Post" > Like </button>
       	 <button class = "Mybtn Save_Post" type="button" id="Save_Post" > Save </button>
-		 <button onclick="viewFunction(this)" class = "Mybtn View_Post" type="button" id="View_Post" > View </button>
+		 <button onclick="viewFunction(this)" class = "Mybtn View_Post" type="button" id="View_Post" value="small"> View </button>
 		  </div>
   </div> `
 
@@ -150,11 +150,28 @@ function viewFunction(but){
 	console.log("F: viewing post");
 //	but.parent.clear();
 	
-	var ParentNode = but.parentNode.parentNode;
+	var ParentNode = but.parentNode.parentNode.children[0];
 	
+	var image = ParentNode.children[0].children[0];
+	var post_title = ParentNode.children[1].children[0];
+	var post_body = ParentNode.children[1].children[1];
 //	ParentNode.hidden = true;
+	ParentNode.innerHTML = "";
+	ParentNode.appendChild(image);
+	ParentNode.appendChild(post_title);
+	ParentNode.appendChild(post_body);
+	ParentNode.style.display = "block";
+//	ParentNode.children[0] = image;
+//	ParentNode.children[1] = post_title;
+//	ParentNode.children[2] = post_body;
+//	
 	console.log(ParentNode);
+//	console.log(image);
+//	console.log(post_title);
+//	console.log(post_body);
+	
 }
+
  
 function LoadPosts(limit){
 	$("#UserPosts").empty();
