@@ -108,4 +108,21 @@ public class Query {
 	// Autocomplete
 	public static final String autocomplete_tags="select * from topics where lower(name) similar to ?";
 	
+	// Assign post for volunteer
+	public static final String check_assigned_post= "select post_id from pending_posts where current_volunteer= ?;" ;
+	public static final String assign_post=
+			"with helper(post_id) as (" + 
+			"	select pending_posts.*" + 
+			"	from volunteer_topics,pending_posts,post_topics" + 
+			"	where volunteer_topics.user_id=? and pending_posts.post_id=post_topics.post_id and " + 
+			"		post_topics.topic_name=volunteer_topics.topic_name and pending_posts.current_volunteer is null" + 
+			")" + 
+			"update pending_posts " + 
+			"set current_volunteer=?, assigned_timestamp=now()" + 
+			"where post_id in " + 
+			"	(select p.post_id " + 
+			"	from ((helper natural join posts) natural left outer join admin_posts)  p " + 
+			"	order by admin_id is not null,created_timestamp limit 1)" + 
+			"returning post_id";
+	public static final String post_id_to_data ="select title,author_name,body,image_metadata,created_timestamp from posts where post_id=?" ; 
 }

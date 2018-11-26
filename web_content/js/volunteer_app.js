@@ -66,5 +66,4 @@ function but() {
         }
     );
     console.log(selected_tags);
- 
 }
