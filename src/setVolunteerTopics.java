@@ -46,7 +46,7 @@ public class setVolunteerTopics extends HttpServlet {
 		HttpSession session = request.getSession();
 		if(session.getAttribute("userid") == null) { //not logged in
 			response.sendRedirect("LoginServlet");
-		}
+		}	
 		
 		String id = (String) session.getAttribute("userid");
 		int n =   Integer.parseInt(request.getParameter("number"));

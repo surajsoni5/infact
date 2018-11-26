@@ -1,23 +1,35 @@
 var start  = "localhost:8080/Infact/";
 
 var r1 = ` <div class = "row Mypost-row">
-<div class="col-sm-1"> </div>
-<div class="col-sm-10 Mypost-main"> 
+<div class="col-lg-1"> </div>
+<div class="col-lg-10 Mypost-main"> 
   <div class="row Mypost-submain" >
-      <div class="col-sm-5 "> 
+   <div class = "row">
+      <div class="col-lg-5 "> 
         <div class = "Mypost-image"> `
             
 var r2=  ` </div>
       </div>
-      <div class="col-sm-7"> 
+      <div class="col-lg-7"> 
         <div class="Mypost-title">`
          
  var r3 =       ` </div>
         <div class="Mypost-body">`;
               
 var r4 = ` </div> 
+			</div>
       </div>
+      <div class="row User-Option-row">
+      	 <button class = "Mybtn Like_Post" type="button" id="Like_Post" > Like </button>
+      	 <button class = "Mybtn Save_Post" type="button" id="Save_Post" > Save </button>
+		 <button onclick="viewFunction(this)" class = "Mybtn View_Post" type="button" id="View_Post" > View </button>
+		  </div>
   </div> `
+
+
+var response = null;
+const click_color = "#333333";
+const unclick_color = "#57b846";
 
 
 $(document).ready(function () {
@@ -48,17 +60,77 @@ $(document).ready(function () {
 	        }
 	    });
 	}else {
-		LoadPosts(3);
+		LoadPosts(4);
 	}
 	
 	$('#Logout_button').click(function(){
 		Logout();
 	});
 	
+	$('#Volunteer_button').click(function(){
+		LoadVolunteer();
+	});
+	
+	$('#Home_button').click(function(){
+		$('#UserPosts').show();
+		$('#VolunteerPosts').hide();
+	});
+	
+	$('#Upvote_button').click(function(){
+		if(response == 1){
+			$('#Upvote_button').css('background-color', unclick_color);
+			response = null;
+			
+			
+		}else{
+			
+			if(response == 0){
+				$('#Downvote_button').css('background-color', unclick_color);
+			}
+			response = 1;
+			$('#Upvote_button').css('background-color', click_color);
+		}
+	});
+	
+	$('#Downvote_button').click(function(){
+		if(response == 0){
+			$('#Downvote_button').css('background-color' ,unclick_color);
+			response = null;
+		}else{
+			
+			if(response == 1){
+				$('#Upvote_button').css('background-color', unclick_color);
+			}
+			response = 0;
+			$('#Downvote_button').css('background-color', click_color);
+		}
+	});
+	
+//	$('.View_Post').click(function(){
+//		console.log("Viewing posts");
+//		$(this).parent().clear();
+//	});
+	
+	
+	$('#vol-submit').click(function(){
+		var comment = $('#post-comment').val();
+		if(response == null){
+			alert('Please add Response');
+		}else if(comment == null || comment.length == 0){
+			alert('Please add Comment');
+		}
+	});
+	
 });
 
-function LoadVolunteer(){
+function LoadHome(){
 	
+}
+
+
+function LoadVolunteer(){
+	$('#UserPosts').hide();
+	$('#VolunteerPosts').show();
 }
 
 function Logout(){
@@ -72,6 +144,16 @@ function Logout(){
 	        	}
 	        }
 	       );
+}
+
+function viewFunction(but){
+	console.log("F: viewing post");
+//	but.parent.clear();
+	
+	var ParentNode = but.parentNode.parentNode;
+	
+//	ParentNode.hidden = true;
+	console.log(ParentNode);
 }
  
 function LoadPosts(limit){

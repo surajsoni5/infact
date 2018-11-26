@@ -17,8 +17,8 @@ $(document).ready(function () {
 //            	console.log(response.status);
             	if(status == 'success' && response.status){
             		console.log("Login Sucessfull ");
-                	
-                	window.location = window.location.protocol + '//' + (start+"home.html");
+            		window.location.replace('home.html')
+//                	window.location = window.location.protocol + '//' + (start+"home.html");
             	}else {
             		console.log("Login Failed: "+response);
             	}
