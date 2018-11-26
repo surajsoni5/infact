@@ -27,7 +27,7 @@ public class AdminLogin extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	 */ 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		if(session.getAttribute("adminid") != null) { // logged in
@@ -45,17 +45,18 @@ public class AdminLogin extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String adminid = request.getParameter("admin_id");
+		String emailid = request.getParameter("emailid");
 		String password = request.getParameter("password");
 		
 		String query = Query.AdminLogin_query;
 		List<List<Object>> res = DbHelper.executeQueryList(query, 
 				new DbHelper.ParamType[] {DbHelper.ParamType.STRING}, 
-				new Object[] {adminid});
+				new Object[] {emailid});
 		
 		String dbPass = res.isEmpty()? null : (String)res.get(0).get(0);
+		System.out.println(dbPass);
 		if(dbPass != null && dbPass.equals(password)) {
-			session.setAttribute("adminid", adminid);
+			session.setAttribute("adminid", res.get(0).get(1));  
 			response.getWriter().print(DbHelper.okJson().toString());
 		}
 		else {

@@ -11,11 +11,11 @@ $(document).ready(function () {
             	
             $.post("UserLogin",
             		{
-                'email_id' : email,
-                'password' : pwd
+                email_id : email,
+                password : pwd
             },function (response,status){
 //            	console.log(response);
-            	if(status == 'success' && response.status == true){
+            	if(status == 'success' && JSON.parse(response).status){
             		console.log("Login Sucessfull ");
                 	
                 	window.location = window.location.protocol + '//' + (start+"home.html");

@@ -59,7 +59,7 @@ public class UserLogin extends HttpServlet {
 		String emailid = request.getParameter("email_id");
 		String password = request.getParameter("password");
 //		String emailid = jsonMap.get("email_id").toString();
-//		String password = jsonMap.get("password").toString();
+//		String password = jsonMap.get("password").toString();  
 //		
 //		System.out.println( jsonMap.toString() + " Json");
 		System.out.println( emailid + " Email");
@@ -84,8 +84,8 @@ public class UserLogin extends HttpServlet {
 			res =  DbHelper.executeQueryList(Query.IsVolunteer_query, 
 					new DbHelper.ParamType[] {DbHelper.ParamType.INT}, 
 					new Object[] {userid});
-			dbPass = res.isEmpty()? null : (String)res.get(0).get(0);
-			if(dbPass != null && dbPass.equals(userid)) {
+			Long dbPass1 = res.isEmpty()? -1 : (Long) res.get(0).get(0);
+			if(dbPass1 != -1 && dbPass1==userid) {
 				session.setAttribute("isVolunteer", true);
 				session.setAttribute("isApplication", false);
 				System.out.println("He is a Voluteer");
@@ -95,8 +95,8 @@ public class UserLogin extends HttpServlet {
 				res =  DbHelper.executeQueryList(Query.isApplication_query, 
 						new DbHelper.ParamType[] {DbHelper.ParamType.INT}, 
 						new Object[] {userid});
-				dbPass = res.isEmpty()? null : (String)res.get(0).get(0);
-				if(dbPass != null && dbPass.equals(emailid)) {
+				dbPass1 = res.isEmpty()? -1 : (Long)res.get(0).get(0);
+				if(dbPass1 != -1 && dbPass1==userid) {
 					session.setAttribute("isApplication", true);
 					System.out.println("He Applied for Voluteer");
 				}else {
