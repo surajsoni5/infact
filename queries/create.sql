@@ -11,6 +11,7 @@ create table posts
 		post_id        SERIAL,
 		created_timestamp      timestamp,
         image			bytea,
+        image_metadata varchar(10),
         body           varchar(3000),
 		title          varchar(50),
      	author_name        varchar(50),
@@ -71,7 +72,7 @@ create table pending_posts
      primary key (post_id),
      foreign key (post_id) references posts
         on delete cascade,
-     foreign key (current_volunteer) references users
+     foreign key (current_volunteer) references volunteers
        on delete cascade
     );
 
