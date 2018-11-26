@@ -45,7 +45,7 @@ public class RemoveUserTopics extends HttpServlet {
 			response.sendRedirect("LoginServlet");
 		}
 
-		String id = (String) session.getAttribute("userid");
+		int id = (int) session.getAttribute("userid");
 		int n =   Integer.parseInt(request.getParameter("number"));
 		String t = (String) request.getParameter("topics");
 		Object[] topics = mapper.readValue(t, Object[].class);
@@ -54,7 +54,7 @@ public class RemoveUserTopics extends HttpServlet {
 		
 		for(int i = 0;i<n;i++) {
 			String json =  DbHelper.executeQueryJson(query, 
-					new DbHelper.ParamType[] {DbHelper.ParamType.STRING, DbHelper.ParamType.STRING}, 
+					new DbHelper.ParamType[] {DbHelper.ParamType.STRING, DbHelper.ParamType.INT}, 
 					new Object[] {topics[i],id});
 			
 		}

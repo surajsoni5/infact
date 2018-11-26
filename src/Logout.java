@@ -27,13 +27,15 @@ public class Logout extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
+		
 		HttpSession session = request.getSession();
-		if(session.getAttribute("id") == null) { //not logged in
-			response.getWriter().print(DbHelper.errorJson("Not logged in").toString());
+		if(session == null) { //not logged in
+			response.getWriter().println(DbHelper.okJson().toString());
 			return;
 		}
 		session.invalidate();
 		response.getWriter().println(DbHelper.okJson().toString());
+		response.setContentType("application/json;charset=UTF-8");
 	}
 
 	/**

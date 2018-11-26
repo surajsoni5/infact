@@ -68,9 +68,7 @@ public class UserLogin extends HttpServlet {
 		System.out.println( emailid + " Email");
 		System.out.println( password + " PassMy");
 		
-		ArrayNode data = mapper.createArrayNode();
-		ObjectNode isVolunteer = mapper.createObjectNode();
-		ObjectNode isApplication = mapper.createObjectNode();
+		
 		
 		List<List<Object>> res = DbHelper.executeQueryList(Query.UserLogin_query, 
 				new DbHelper.ParamType[] {DbHelper.ParamType.STRING}, 
@@ -87,41 +85,11 @@ public class UserLogin extends HttpServlet {
 			
 			session.setAttribute("userid", userid);
 			
-			res =  DbHelper.executeQueryList(Query.IsVolunteer_query, 
-					new DbHelper.ParamType[] {DbHelper.ParamType.INT}, 
-					new Object[] {userid});
-			Long dbPass1 = res.isEmpty()? -1 : (Long) res.get(0).get(0);
-			if(dbPass1 != -1 && dbPass1==userid) {
-				session.setAttribute("isVolunteer", true);
-				session.setAttribute("isApplication", false);
-				
-				isVolunteer.put("isVolunteer", true);
-				isApplication.put("isApplication", true);
-				System.out.println("He is a Voluteer");
-			}else {
-				session.setAttribute("isVolunteer", false);
-				isVolunteer.put("isVolunteer", false);
-				
-				
-				res =  DbHelper.executeQueryList(Query.isApplication_query, 
-						new DbHelper.ParamType[] {DbHelper.ParamType.INT}, 
-						new Object[] {userid});
-				dbPass1 = res.isEmpty()? -1 : (Long)res.get(0).get(0);
-				if(dbPass1 != -1 && dbPass1==userid) {
-					session.setAttribute("isApplication", true);
-					isApplication.put("isApplication", true);
-					System.out.println("He Applied for Voluteer");
-				}else {
-					session.setAttribute("isApplication", false);
-					isApplication.put("isApplication", false);
-					System.out.println("He is just a User");
-				}
-			}
 			
 			ObjectNode ret = DbHelper.okJson();
-			data.add(isVolunteer);
-			data.add(isApplication);
-			ret.putArray(DbHelper.DATA_LABEL).addAll(data); 
+//			data.add(isVolunteer);
+//			data.add(isApplication);
+//			ret.putArray(DbHelper.DATA_LABEL).addAll(data); 
 			System.out.println(ret.toString());
 			response.getWriter().print(ret.toString());
 			

@@ -2,8 +2,8 @@ var start  = "localhost:8080/Infact/";
 
 var r1 = ` <div class = "row Mypost-row">
 <div class="col-sm-1"> </div>
-<div class="col-sm-9 "> 
-  <div class="row Mypost-main" >
+<div class="col-sm-10 Mypost-main"> 
+  <div class="row Mypost-submain" >
       <div class="col-sm-5 "> 
         <div class = "Mypost-image"> `
             
@@ -48,14 +48,31 @@ $(document).ready(function () {
 	        }
 	    });
 	}else {
-		LoadPosts(2);
+		LoadPosts(3);
 	}
 	
-	
-	
-	
+	$('#Logout_button').click(function(){
+		Logout();
+	});
 	
 });
+
+function LoadVolunteer(){
+	
+}
+
+function Logout(){
+	$.post(
+	       'Logout',
+	        {}
+	        , 
+	       function(response,status){
+	        	if(status== "success" && response.status == true){
+	        		window.location.replace("index.html");
+	        	}
+	        }
+	       );
+}
  
 function LoadPosts(limit){
 	$("#UserPosts").empty();

@@ -29,12 +29,11 @@ public class UserInfo extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		HttpSession session = request.getSession();
-		if(session.getAttribute("userid") == null) { //not logged in
+		if(session ==null || session.getAttribute("userid") == null) { //not logged in
 			response.sendRedirect("LoginServlet");
 		}
 		int id = (int) session.getAttribute("userid");
-		
-//		String id = "1234";
+
 		String json = DbHelper.executeQueryJson(Query.UserInfo_query, 
 				new DbHelper.ParamType[] {DbHelper.ParamType.INT},
 				new Object[] {id});
