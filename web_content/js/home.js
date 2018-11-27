@@ -152,6 +152,8 @@ function upvote() {
 
 }
 
+var liked_comments=[]
+var unliked_comments=[]
 function LoadVolunteer() {
 	$.post(
 		'getVolunteer',
@@ -170,9 +172,11 @@ function LoadVolunteer() {
 					$.each(data.comments, function (index, element) {
 						console.log(element.comment)
 						$('#comment_list').append(
+							'<li class="list-group-item" >'+
 							'<div>'+element.comment +'</div>'+
-							'<button onclick="like(\''+element.comment+'\' , this)"> <i class="material-icons" style="font-size:36px;" >cloud</i> </button>'+
-							'<button onclick="unlike(\''+element.comment+'\',this)"> <i class="material-icons" style="font-size:36px;" >cloud</i> </button>'
+							'<button  onclick="like(\''+element.comment+'\',this )"> <i  class="material-icons " style="font-size:36px;" >cloud</i> </button>'+
+							'<button  onclick="unlike(\''+element.comment+'\',this)"> <i class="material-icons " style="font-size:36px;" >cloud</i> </button>'+
+							'</li>'
 						);
 						// $('#comment_list').append('<li class="list-group-item">' + element.comment + ' <i></i><span>1</span><i></i>    </li>')
 					});
@@ -191,10 +195,32 @@ function LoadVolunteer() {
 		}
 	);
 }
-function like(comment,button){
-	button.children[0].style.color = "red";
-	console.log(button)
+function like(comment,but){
+	console.log(but.parentNode);	
+	if(jQuery.inArray(comment, liked_comments) !== -1){
+		liked_comments.pop(comment);
+		but.parentNode.children[1].children[0].style.color='black'
+	}else if(jQuery.inArray(comment, unliked_comments) !== -1){
+		unliked_comments.pop(comment);
+		but.parentNode.children[2].children[0].style.color='black'
+	}else{
+		liked_comments.push(comment);
+		but.parentNode.children[1].children[0].style.color='green'
+	}
 }
+function unlike(comment,but){
+	if(jQuery.inArray(comment, liked_comments) !== -1){
+		liked_comments.pop(comment);
+		but.parentNode.children[1].children[0].style.color='black'
+	}else if(jQuery.inArray(comment, unliked_comments) !== -1){
+		unliked_comments.pop(comment);
+		but.parentNode.children[2].children[0].style.color='black'
+	}else{
+		unliked_comments.push(comment);
+		but.parentNode.children[2].children[0].style.color='red'
+	}
+}
+
 
 function Logout() {
 	$.post(
