@@ -1,4 +1,4 @@
-var r1 =`
+var ra1 =`
           <div class = "row Mypost-row" data-value="1">
           <div class="col-lg-1"> </div>
           <div class="col-lg-11 Mypost-main"> 
@@ -8,38 +8,40 @@ var r1 =`
             	<div class = "stat-total">
                         `;
                         
-var r2 =                 `
+var ra2 =                 `
             	</div>
             	<img class = "stat-img" alt="correct-icon" src="./images/correct.png">
             	<div class = "stat-upvote">
                         `;
             
-var r3 =            `
+var ra3 =            `
             	</div>
             	<img class = "stat-img" alt="correct-icon" src="./images/incorrect.png">
             	<div class = "stat-downvote">
                   `;
-var r4 =            `
+var ra4 =            `
             	</div>
             </div>
               <div class = "row ">`;
-var r5 =               
+var ra5 =               
               `
                 <div class="col-lg-5 "> 
                   <div class = "Mypost-image"> `;
                   
-var r6 =      `
+var ra6 =      `
                   </div>
                 </div>
                 <div class="col-lg-7"> 
                   <div class="Mypost-title"> `;
                   
-var r7 =      `
+var ra7 =      `
                   </div>
                   <div class="Mypost-body">`;
                   
-var  r8 =     `
-                  </div>  
+var  ra8 =     `
+                  </div>  `;
+
+var ra9  =  `
                 </div>
               </div>
                   <div class="row User-Option-row" >
@@ -51,9 +53,9 @@ var  r8 =     `
                 </div>
               </div>
           </div>
-
-
 `
+
+
 
 
 
@@ -96,9 +98,49 @@ var r6 = `</div>
 	
 $(document).ready(function () { 
       
-      
+//	LoadVerificationPosts(3);
+	$('#Home_button').click(function () {
+		$('#Applications').hide();
+		$('#VerificationPosts').show();
+		LoadVerificationPosts(limit);
+	});
+	
+	$('#Applications-btn').click(function(){
+		$('#Applications').show();
+		$('#VerificationPosts').hide();
+//		TODO: Hardcoded limit
+		LoadApplications(5);
+	});
+	
+	$('#Volunteers-btn').click(function(){
+			
+		});
+	$('#Logout-btn').click(function(){
+			Logout();
+	});
 });
-      
+
+function LoadVolunteers(limit){
+	
+}
+    
+function LoadApplications(limit){
+	
+}
+
+
+function Logout() {
+	$.post(
+		'Logout',
+		{}
+		,
+		function (response, status) {
+			if (status == "success" && response.status == true) {
+				window.location.replace("admin_login.html");
+			}
+		}
+	);
+}
 
 function LoadVerificationPosts(limit){
       $("#UserPosts").empty();
@@ -121,14 +163,17 @@ function LoadVerificationPosts(limit){
 				var data = response.data;
 				var len = data.length;
 				for (var i = 0; i < len; i++) {
-					var r = r1 + r2 +
+					var r = ra1 + " 1 " + ra2 + " 2 " + ra3 + " 3 "+ ra4 +
+						ra5 +
 						` <img src= "` + `getPostImage?post_id=` + data[i].post_id + `" id="image" alt=" ` + " Image" + ` "> ` +
-						r3 + data[i].title + r4 + data[i].body + r5 + r6;
+						ra6 + data[i].title + ra7 + data[i].body + ra8 + ra9;
 					$("#UserPosts").append(r);
 				}
 			}
 
 		}
 	);
+	
+	
 
 }

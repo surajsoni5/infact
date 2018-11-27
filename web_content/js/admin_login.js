@@ -18,11 +18,12 @@ $(document).ready(function () {
                     console.log(response)
                     console.log(status)
                     console.log(status=='success')
-                    if (status == 'success' && JSON.parse(response).status) {
+                    if (status == 'success' && response.status) {
                         console.log("Login Sucessfull ");
-                        window.location.replace('index.html')
+                        window.location.replace('admin_home.html')
                         // window.location = window.location.protocol + '//' + (start+"home.html");
                     } else {
+                    	alert('Login Failed');
                         console.log("Login Failed: " + response);
                     }
                 } 

@@ -104,6 +104,7 @@ $(document).ready(function () {
 	$('#Home_button').click(function () {
 		$('#UserPosts').show();
 		$('#VolunteerPosts').hide();
+		LoadPosts(5);
 	});
 
 	$('#Upvote_button').click(function () {
@@ -187,7 +188,7 @@ function LoadVolunteer() {
 		{},
 		function (data, status) {
 			if (status != 'success') { }//Do something
-			data = JSON.parse(data)
+			
 			if (data.isVolunteer) {
 				if (data.post_available) {
 					// TODO: handle jpg and png and confirm security issues
@@ -248,7 +249,6 @@ function unlike(comment,but){
 		but.parentNode.children[2].children[0].style.color='red'
 	}
 }
-
 
 function Logout() {
 	$.post(

@@ -62,6 +62,8 @@ public class AdminLogin extends HttpServlet {
 		else {
 			response.getWriter().print(DbHelper.errorJson("Username/password incorrect").toString());
 		}
+		
+		response.setContentType("application/json;charset=UTF-8");
 	}
 
 }

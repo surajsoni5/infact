@@ -5,6 +5,14 @@
 	
 }
 
+.Applications{
+	display: none;
+}
+
+.VerificationPosts{
+	
+}
+
 .stat-img{
 	max-height: 50px;
 	max-width: 50px;
