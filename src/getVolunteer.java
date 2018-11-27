@@ -52,6 +52,7 @@ public class getVolunteer extends HttpServlet {
 	            	ResultSet rset= stmt1.executeQuery();
 	            	if(rset.next()) {
 	            		post_id=rset.getInt(1);
+	            		
 	            	}else {
 	            		stmt2.setInt(1, userid);
 	            		stmt2.setInt(2, userid);
@@ -59,6 +60,7 @@ public class getVolunteer extends HttpServlet {
 	            		ResultSet rset1 = stmt2.getResultSet();
 	            		if(rset1.next()) {
 	            			post_id=rset1.getInt(1);
+	            			System.out.println(post_id);
 	            		}
 	            	}
 	                conn.commit();
@@ -78,11 +80,12 @@ public class getVolunteer extends HttpServlet {
 	            		if(rset.next()) {
 // Refer below for reference	            			
 //public static final String post_id_to_data ="select title,author_name,body,image_metadata,created_timestamp from posts where post_id=1" ; 
-	            			out.put("title", rset.getString(0));
-	            			out.put("author_name", rset.getString(1));
-	            			out.put("body", rset.getString(2));
-	            			out.put("image_metadata", rset.getString(3));
-	            			out.put("created_timestamp", (String) rset.getObject(4));
+	            			out.put("title", rset.getString(1));
+	            			out.put("author_name", rset.getString(2));
+	            			out.put("body", rset.getString(3));
+	            			out.put("image_metadata", rset.getString(4));
+	            			out.put("created_timestamp",  rset.getTimestamp(5).toString()); 
+	            			out.put("post_id", post_id);   
 	            		}
 	            	}catch(Exception ex) {
 	            		out.put("post_available", false);
@@ -97,6 +100,7 @@ public class getVolunteer extends HttpServlet {
 	        } catch (Exception e) {
 	            response.getWriter().flush();
 	            response.getWriter().print(DbHelper.errorJson("Network error"));
+	            System.out.println(e);
 	            return;
 	        }
 
