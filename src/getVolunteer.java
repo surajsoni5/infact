@@ -116,12 +116,13 @@ public class getVolunteer extends HttpServlet {
 			res =  DbHelper.executeQueryList(Query.isApplication_query, 
 					new DbHelper.ParamType[] {DbHelper.ParamType.INT}, 
 					new Object[] {userid});
-			if(!res.isEmpty()) {
+			System.out.print(res);
+			if(res.isEmpty()) {
 				out.put("isApplication", false);
-				System.out.println("He is a Application");
+				System.out.println("He is a not Application");
 			}else {
 				out.put("isApplication", true);
-				System.out.println("He is a not Application");
+				System.out.println("He is a  Application");
 			}
 		}
 		System.out.println(out.toString());
