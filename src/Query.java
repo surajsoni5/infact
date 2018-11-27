@@ -28,7 +28,10 @@ public class Query {
 	public static final String addAdminPost_query = "insert into admin_posts values (?,?)"; // adminid postid
 	
 	/** Get Posts**/
-	public static final String getPosts_query = "select posts.post_id,posts.created_timestamp,posts.image,posts.body,posts.title,posts.author_name from posts,post_topics,published_posts where published_posts.post_id =  posts.post_id and posts.post_id = post_topics.post_id and posts.created_timestamp < (?) and post_topics.topic_name in (select topic_name from user_topics where user_id = (?) ) order by posts.created_timestamp limit (?) "; //Expand 
+	public static final String getPosts_query = 
+			"select posts.post_id,posts.created_timestamp,posts.image,posts.body,posts.title,posts.author_name "
+			+ "from posts,post_topics,published_posts "
+			+ "where published_posts.post_id =  posts.post_id and posts.post_id = post_topics.post_id and posts.created_timestamp < (?) and post_topics.topic_name in (select topic_name from user_topics where user_id = (?) ) order by posts.created_timestamp limit (?) "; //Expand 
 	public static final String getPostImage_query = "select image from posts where post_id = (?)";
 	/** User Specific **/
 	public static final String UserInfo_query = "select * from users where user_id = (?)";
@@ -114,8 +117,8 @@ public class Query {
 			"with helper(post_id) as (" + 
 			"	select pending_posts.*" + 
 			"	from volunteer_topics,pending_posts,post_topics" + 
-			"	where volunteer_topics.user_id=? and pending_posts.post_id=post_topics.post_id and " + 
-			"		post_topics.topic_name=volunteer_topics.topic_name and pending_posts.current_volunteer is null" + 
+			"	where volunteer_topics.user_id=? and pending_posts.post_id=post_topics.post_id and pending_posts.score < "+ Config.threshold + 
+			"		and post_topics.topic_name=volunteer_topics.topic_name and pending_posts.current_volunteer is null" + 
 			")" + 
 			"update pending_posts " + 
 			"set current_volunteer=?, assigned_timestamp=now()" + 
@@ -124,5 +127,13 @@ public class Query {
 			"	from ((helper natural join posts) natural left outer join admin_posts)  p " + 
 			"	order by admin_id is not null,created_timestamp limit 1)" + 
 			"returning post_id";
-	public static final String post_id_to_data ="select title,author_name,body,image_metadata,created_timestamp from posts where post_id=?" ; 
+	public static final String post_id_to_data ="select title,author_name,body,image_metadata,created_timestamp from posts where post_id=?" ;
+	// Update responses and pending to published posts
+	public static final String addresponse = "insert into responses values (?,?,?,?)";  
+	public static final String increasescore=
+			"update pending_posts " + 
+			"set current_volunteer=null,score=score+1" + 
+			"where pending_posts.post_id=?" ;
+	public static final String delete_pending_posts="delete from pending_posts where post_id=?";
+	public static final String insert_published_posts="insert into published_posts values (?,now())";
 }

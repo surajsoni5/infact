@@ -60,10 +60,9 @@ function but() {
             	if(request.getResponseHeader('require_auth')=='yes'){
             		window.location.replace('index.html')
             	}else{
-            		
+            		window.location.replace('home.html')
             	}
             }
         }
     );
-    console.log(selected_tags);
 }
