@@ -20,6 +20,7 @@ $(document).ready(function () {
             		window.location.replace('home.html')
 //                	window.location = window.location.protocol + '//' + (start+"home.html");
             	}else {
+            		alert("Sorry Login Failed");
             		console.log("Login Failed: "+response);
             	}
             }

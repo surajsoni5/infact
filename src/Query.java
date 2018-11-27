@@ -41,10 +41,10 @@ public class Query {
 	public static final String VolunteerInfo_query = "select * from volunteer where user_id = (?)";
 	
 	/** Volunteer **/
-	public static final String ApplyVolunteer_query = "insert into applications values (?,?,?)"; //(user_id,requested_timestamp,SOP
+//	public static final String ApplyVolunteer_query = "insert into applications values (?,?,now())"; //(user_id,SOP,timestamp
 	
-	public static final String getVolunteerResponses_query = "select * from responses,volunteers where volunteers.user_id = (?) and volunteers.user_id = responses.user_id";
-	public static final String addVolunteerResponse_query = "insert into responses values (?,?,?,?)"; //post_id,user_id,comment,verify
+//	public static final String getVolunteerResponses_query = "select * from responses,volunteers where volunteers.user_id = (?) and volunteers.user_id = responses.user_id";
+//	public static final String addVolunteerResponse_query = "insert into responses values (?,?,?,?)"; //post_id,user_id,comment,verify
 	
 	
 	/** Admin **/
@@ -53,13 +53,13 @@ public class Query {
 	
 	/** Volunteer feed posts (For verification) **/
 	// public static final String getVolunteerpostID_query = "select post_id from pending posts where current_volunteer is null and score < (?) limit (?)"; // (thersh,number)
-	public static final String getVolunteerpostID_query = "update pending_posts set current_volunteer = (?) where current_volunteer is null and score < (?) limit (?) returning post_id"; // (thersh,number)
-	public static final String getVolunteerposts_query = 
-			"select posts.post_id,posts.created_timestamp,posts.image,posts.body,posts.title,posts.author_name "
-			+ "from posts,pending_posts "
-			+ "where pending_posts.post_id = posts.post_id and pending_posts.current_volunteer is null and pending_posts.score < (?) limit (?)"
-			+ "and posts.post_id not in (select post_id from responses where response.user_id = (?) and posts.post_id = responses.post_id)";
-	public static final String moveVolunteer_query = "update pending_posts set current_volunteer = null where post_id = (?)";
+//	public static final String getVolunteerpostID_query = "update pending_posts set current_volunteer = (?) where current_volunteer is null and score < (?) limit (?) returning post_id"; // (thersh,number)
+//	public static final String getVolunteerposts_query = 
+//			"select posts.post_id,posts.created_timestamp,posts.image,posts.body,posts.title,posts.author_name "
+//			+ "from posts,pending_posts "
+//			+ "where pending_posts.post_id = posts.post_id and pending_posts.current_volunteer is null and pending_posts.score < (?) limit (?)"
+//			+ "and posts.post_id not in (select post_id from responses where response.user_id = (?) and posts.post_id = responses.post_id)";
+//	public static final String moveVolunteer_query = "update pending_posts set current_volunteer = null where post_id = (?)";
 	
 	
 	
@@ -105,7 +105,7 @@ public class Query {
 	
 	// Add volunteers 
 	
-	public static final String addVolunteer = "insert into applications values (?,?,?)";
+	public static final String addVolunteer = "insert into applications values (?,?,now())"; //(user_id,SOP,timestamp
 	public static final String addVolunteer_topics = "insert into application_topics values (?,?)";
 	
 	// Autocomplete

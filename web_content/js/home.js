@@ -38,10 +38,7 @@ var postid = null;
 
 
 $(document).ready(function () {
-	console.log("User Topics: " + Cookies.get('user_topics'));
-	// If user_topics doesn't exists;
-	//	Cookies.clear('user_topics');
-	if (Cookies.get('user_topics') == undefined) {
+
 		$.ajax({
 			url: 'getUserTopics',
 			type: 'get',
@@ -49,8 +46,10 @@ $(document).ready(function () {
 				var data = response.data;
 				if (response.status == true) {
 					if (typeof data == 'undefined' || data.length == 0) {
-						alert("No User Topics")
+						// alert("No User Topics")
 						// TODO: Add Model ( pop-up to select topics )
+						gettags();
+						$("#tags").modal('show');
 					} else {
 						var usertopic = data;
 						for (var i = 0; i < data.length; i++) {
@@ -63,9 +62,6 @@ $(document).ready(function () {
 				}
 			}
 		});
-	} else {
-		LoadPosts(4);
-	}
 
 	$('#Logout_button').click(function () {
 		Logout();
