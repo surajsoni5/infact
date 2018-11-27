@@ -74,23 +74,36 @@ public class addPost extends HttpServlet {
 		
 		
 		
-		
+		String img_metadata = null;
+		List<Object> bytea = new ArrayList<>();
+
 		Part filePart=request.getPart("file-upload");
+		
 		System.out.println(filePart);
 		String filePath = filePart.getSubmittedFileName();
+		if(filePath != null) {
 		Path p = Paths.get(filePath);
 		String fileName = p.getFileName().toString();
 		int  filelen=(int) filePart.getSize();
 		InputStream fileContent = filePart.getInputStream();
 		
+		
+		bytea.add(fileContent);
+		bytea.add(filelen);
+		
 		System.out.println("Add Post: Image File Name " + fileName.substring(fileName.length()-3));
 		System.out.println("Add Post: Image File Path " + p);
 		System.out.println("Add Post: Image File Size " + filelen);
 		
+		img_metadata = "image/" +fileName.substring(fileName.lastIndexOf(".")+1);
+		
+		}else {
+			bytea = null;
+			img_metadata = null;
+		}
 		String title = request.getParameter("post-title");
 		String body = request.getParameter("post-body");
 //		String image = request.getParameter("imagefile");
-		String author_name = "Test-Author";
 		
 		
 //		File file = new File(request.getParameter("articlebody"));
@@ -109,48 +122,53 @@ public class addPost extends HttpServlet {
 //		List<Posts> myObjects = mapper.readValue(request.getInputStream() , new TypeReference<List<Posts>>(){});
 		
 //		System.out.println( myObjects.toString() + " Json");
-		System.out.println("Add Post: Title " + title);
-		System.out.println("Add Post: body " + body);
+		System.out.println("Add Post Title: Title " + title);
+		System.out.println("Add Post Body: body " + body);
 		
 		
 		 // Image body title author_name
-		List<Object> bytea = new ArrayList<>();
-		bytea.add(fileContent);
-		bytea.add(filelen);
-		
-		String json =  DbHelper.executeQueryJson(Query.addPost_query, 
-				new DbHelper.ParamType[] {DbHelper.ParamType.BYTEA,DbHelper.ParamType.STRING, DbHelper.ParamType.STRING,DbHelper.ParamType.STRING,DbHelper.ParamType.STRING}, 
-				new Object[] {bytea,fileName.substring(fileName.length()-3).toLowerCase(),body,title,author_name});
-		
-		Map<String, Object> jsonRes = mapper.readValue(json,
-			    new TypeReference<Map<String,Object>>(){});
-		
-		
+		String json = "";
+		if(img_metadata == null) {
+			json =  DbHelper.executeUpdateJson(Query.addPost_query, 
+					new DbHelper.ParamType[] {DbHelper.ParamType.STRING,DbHelper.ParamType.STRING, DbHelper.ParamType.STRING,DbHelper.ParamType.STRING,DbHelper.ParamType.INT}, 
+					new Object[] {"null","null".toLowerCase(),body,title,id});
+		}else {
+		json =  DbHelper.executeUpdateJson(Query.addPost_query, 
+				new DbHelper.ParamType[] {DbHelper.ParamType.BYTEA,DbHelper.ParamType.STRING, DbHelper.ParamType.STRING,DbHelper.ParamType.STRING,DbHelper.ParamType.INT}, 
+				new Object[] {bytea,img_metadata.toLowerCase(),body,title,id});
+		}
+		response.getWriter().print(json);
 		response.setContentType("application/json;charset=UTF-8");
 		
-		System.out.println("Add Post: List " + ((List) jsonRes.get("data")).get(0));
-		
-		 int post_id = (int) ((LinkedHashMap) (((List) jsonRes.get("data")).get(0)) ).get("post_id");
-		 boolean status = (boolean) jsonRes.get("status");
-		 
-		 if(!status) {
-				response.getWriter().print(json); 
-		 }else {
-			 System.out.println("Add Post: Post ID " + post_id);
-			 
-			 if(isUser) {
-				 json =  DbHelper.executeUpdateJson(Query.addUserPost_query, 
-							new DbHelper.ParamType[] {DbHelper.ParamType.INT,DbHelper.ParamType.INT}, 
-							new Object[] {id,post_id});
-			 }else {
-				 json =  DbHelper.executeUpdateJson(Query.addAdminPost_query, 
-						 	new DbHelper.ParamType[] {DbHelper.ParamType.INT,DbHelper.ParamType.INT}, 
-							new Object[] {id,post_id});
-			 }
-			 
-			 response.getWriter().print(json);
-			 response.setContentType("application/json;charset=UTF-8");
-		 }
+//		Map<String, Object> jsonRes = mapper.readValue(json,
+//			    new TypeReference<Map<String,Object>>(){});
+//		
+//		
+//		response.setContentType("application/json;charset=UTF-8");
+//		
+//		System.out.println("Add Post: List " + ((List) jsonRes.get("data")).get(0));
+//		
+//		 int post_id = (int) ((LinkedHashMap) (((List) jsonRes.get("data")).get(0)) ).get("post_id");
+//		 boolean status = (boolean) jsonRes.get("status");
+//		 
+//		 if(!status) {
+//				response.getWriter().print(json); 
+//		 }else {
+//			 System.out.println("Add Post: Post ID " + post_id);
+//			 
+//			 if(isUser) {
+//				 json =  DbHelper.executeUpdateJson(Query.addUserPost_query, 
+//							new DbHelper.ParamType[] {DbHelper.ParamType.INT,DbHelper.ParamType.INT}, 
+//							new Object[] {id,post_id});
+//			 }else {
+//				 json =  DbHelper.executeUpdateJson(Query.addAdminPost_query, 
+//						 	new DbHelper.ParamType[] {DbHelper.ParamType.INT,DbHelper.ParamType.INT}, 
+//							new Object[] {id,post_id});
+//			 }
+//			 
+//			 response.getWriter().print(json);
+//			 response.setContentType("application/json;charset=UTF-8");
+//		 }
 	}
 
 }

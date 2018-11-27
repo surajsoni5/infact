@@ -66,6 +66,8 @@ $(document).ready(function () {
 			}
 		}
 	});
+	
+	
 
 	$('#topic-save').click(function () {
 		if (selected_topics == null || selected_topics.length < 3) {
@@ -96,14 +98,26 @@ $(document).ready(function () {
 	$('#Logout_button').click(function () {
 		Logout();
 	});
-
+	
+	$('#Editor_button').click(function(){
+		$('#UserPosts').hide();
+		$('#VolunteerPosts').hide();
+		$('#User_Editor').show();
+	});
+	
+	
 	$('#Volunteer_button').click(function () {
+		$('#UserPosts').hide();
+		$('#User_Editor').hide();
 		LoadVolunteer();
 	});
+	
+	
 
 	$('#Home_button').click(function () {
 		$('#UserPosts').show();
 		$('#VolunteerPosts').hide();
+		$('#User_Editor').hide();
 		LoadPosts(5);
 	});
 

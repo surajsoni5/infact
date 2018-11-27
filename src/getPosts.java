@@ -104,11 +104,7 @@ public class getPosts extends HttpServlet {
 			response.setContentType("application/json;charset=UTF-8");
 	}
 
-	private Integer min(int postlimit, Integer limit) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 }
 
 

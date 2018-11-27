@@ -23,13 +23,17 @@ public class Query {
 	
 	/** Adding Posts**/
 	public static final String getPostID_query = "select * from posts where post_id = (?)"; 
-	public static final String addPost_query = "insert into posts values (DEFAULT,now(),?,?,?,?,?) returning post_id"; // Image body title author_name
+	public static final String addPost_query = 
+	" with t(id,time) as (insert into posts values (DEFAULT,now(),?,?,?,?,(select name from users where user_id = ?)) returning post_id,created_timestamp) " + 
+	" insert into pending_posts " + 
+	"  select t.id,null,t.time,null,0 from t";
+	
 	public static final String addUserPost_query = "insert into user_posts values (?,?)"; // user_id postid
 	public static final String addAdminPost_query = "insert into admin_posts values (?,?)"; // adminid postid
 	
 	/** Get Posts**/
 	public static final String getPosts_query = 
-			"select DISTINCT posts.post_id,posts.created_timestamp,posts.image,posts.body,posts.title,posts.author_name "
+			"select DISTINCT posts.post_id,posts.created_timestamp,posts.image_metadata,posts.body,posts.title,posts.author_name "
 			+ "from posts,post_topics,published_posts "
 			+ "where published_posts.post_id =  posts.post_id and"
 			+ " posts.post_id = post_topics.post_id and posts.created_timestamp < (?) and"
@@ -52,6 +56,15 @@ public class Query {
 	
 	
 	/** Admin **/
+	
+	public static final String getAdminPosts_query = 
+			"select DISTINCT posts.post_id,posts.created_timestamp,posts.image_metadata,posts.body,posts.title,posts.author_name "
+			+ "from posts,pending_posts "
+			+ "where pending_posts.post_id =  posts.post_id "
+			+ " posts.created_timestamp < (?) and"
+			+ " post_topics.topic_name in "
+			+ "(select topic_name from user_topics where user_id = (?) ) "
+			+ "order by posts.created_timestamp limit (?) "; //Expand 
 	public static final String AdminInfo_query = "select * from admins where admin_id = (?)";
 	public static final String addAdmin_query = "insert into admins values (?,?)"; // (name, password)
 	
