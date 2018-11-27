@@ -63,7 +63,7 @@ public class volunteer_add_application extends HttpServlet {
             				) {
             	stmt.setInt(1, id);
             	stmt.setString(2,sop);
-            	stmt.setTimestamp(3,new Timestamp(System.currentTimeMillis()));
+//            	stmt.setTimestamp(3,new Timestamp(System.currentTimeMillis()));
                 stmt.executeUpdate();
         		for(int i=0;i<tags.length;i++) {
         			stmt1.setInt(1, id);

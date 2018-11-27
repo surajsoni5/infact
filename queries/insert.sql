@@ -1,3 +1,4 @@
+﻿/**
 delete from admins;
 delete from admin_posts;
 delete from posts;
@@ -14,31 +15,33 @@ delete from volunteer_topics;
 delete from responses;
 delete from user_topics;
 delete from rejected_posts;
+delete from application_topics;
+**/
 
-insert into admins values (DEFAULT, 'admin0@cse.iitb.ac.in','admin0','admin0@admin');
-insert into admins values (DEFAULT, 'admin1@cse.iitb.ac.in','admin1','admin1@admin');
-insert into admins values (DEFAULT, 'admin2@cse.iitb.ac.in','admin2','admin2@admin');
-insert into admins values (DEFAULT, 'admin3@cse.iitb.ac.in','admin3','admin3@admin');
-insert into admins values (DEFAULT, 'admin4@cse.iitb.ac.in','admin4','admin4@admin');
-insert into admins values (DEFAULT, 'admin5@cse.iitb.ac.in','admin5','admin5@admin');
-insert into admins values (DEFAULT, 'admin6@cse.iitb.ac.in','admin6','admin6@admin');
-insert into admins values (DEFAULT, 'admin7@cse.iitb.ac.in','admin7','admin7@admin');
-insert into admins values (DEFAULT, 'admin8@cse.iitb.ac.in','admin8','admin8@admin');
-insert into admins values (DEFAULT, 'admin9@cse.iitb.ac.in','admin9','admin9@admin');
+insert into admins values (DEFAULT, 'a0@infact.com','admin0','a0');
+insert into admins values (DEFAULT, 'a1@infact.com','admin1','a1');
+insert into admins values (DEFAULT, 'a2@infact.com','admin2','a2');
+insert into admins values (DEFAULT, 'a3@infact.com','admin3','a3');
+insert into admins values (DEFAULT, 'a4@infact.com','admin4','a4');
+insert into admins values (DEFAULT, 'a5@infact.com','admin5','a5');
+insert into admins values (DEFAULT, 'a6@infact.com','admin6','a6');
+insert into admins values (DEFAULT, 'a7@infact.com','admin7','a7');
+insert into admins values (DEFAULT, 'a8@infact.com','admin8','a8');
+insert into admins values (DEFAULT, 'a9@infact.com','admin9','a9');
 
 --insert into posts values (TIMESTAMP '2011-05-16 15:36:38','This is the body of the post 1 in the app. Stay tuned for more updates from Infact.','Post 1','user1');
 
 
-insert into users values (DEFAULT, 'user0@cse.iitb.ac.in','user0','user0@user','9999999990');
-insert into users values (DEFAULT, 'user1@cse.iitb.ac.in','user1','user1@user','9999999991');
-insert into users values (DEFAULT, 'user2@cse.iitb.ac.in','user2','user2@user','9999999992');
-insert into users values (DEFAULT, 'user3@cse.iitb.ac.in','user3','user3@user','9999999993');
-insert into users values (DEFAULT, 'user4@cse.iitb.ac.in','user4','user4@user','9999999994');
-insert into users values (DEFAULT, 'user5@cse.iitb.ac.in','user5','user5@user','9999999995');
-insert into users values (DEFAULT, 'user6@cse.iitb.ac.in','user6','user6@user','9999999996');
-insert into users values (DEFAULT, 'user7@cse.iitb.ac.in','user7','user7@user','9999999997');
-insert into users values (DEFAULT, 'user8@cse.iitb.ac.in','user8','user8@user','9999999998');
-insert into users values (DEFAULT, 'user9@cse.iitb.ac.in','user9','user9@user','9999999999');
+insert into users values (DEFAULT, 'u0@user.com','user0','u0','9999999990');
+insert into users values (DEFAULT, 'u1@user.com','user1','u1','9999999991');
+insert into users values (DEFAULT, 'u2@user.com','user2','u2','9999999992');
+insert into users values (DEFAULT, 'u3@user.com','user3','u3','9999999993');
+insert into users values (DEFAULT, 'u4@user.com','user4','u4','9999999994');
+insert into users values (DEFAULT, 'u5@user.com','user5','u5','9999999995');
+insert into users values (DEFAULT, 'u6@user.com','user6','u6','9999999996');
+insert into users values (DEFAULT, 'u7@user.com','user7','u7','9999999997');
+insert into users values (DEFAULT, 'u8@user.com','user8','u8','9999999998');
+insert into users values (DEFAULT, 'u9@user.com','user9','u9','9999999999');
 
 insert into topics values ('Technology');
 insert into topics values ('Movies');
@@ -52,9 +55,11 @@ insert into topics values ('Mythology');
 insert into topics values ('International');
 
 insert into volunteers values (2, 2, 0.0, 0, 0);
+insert into volunteers values (4, 2, 0.0, 0, 0);
 insert into volunteers values (3, 3, 0.0, 0, 0);
 insert into volunteers values (5, 7, 0.0, 0, 0);
 insert into volunteers values (7, 5, 0.0, 0, 0);
+
 
 insert into volunteer_topics values (2,'Technology');
 insert into volunteer_topics values (2,'Movies');

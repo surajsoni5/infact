@@ -1,22 +1,27 @@
 var topics=[];
 var selected_topics=[]
 $(document).ready(function () {
-     $.getJSON(
-         'gettags',
-         null,
-         function(data,status){
-             if(status=='success'){
-            	 $.each(data.data, function(index, element) {
-            		 topics.push( element.name)
-            	 });
-            	 loadlist(topics);
-            	 console.log(topics)
-             }
-             else alert("Please check your internet connection.");
-         }
-     );
-    myFunction();
+     gettags();
 });
+
+function gettags(){
+	$.getJSON(
+	         'gettags',
+	         null,
+	         function(data,status){
+	             if(status=='success'){
+	            	 $.each(data.data, function(index, element) {
+	            		 topics.push( element.name)
+	            	 });
+	            	 loadlist(topics);
+	            	 console.log(topics)
+	             }
+	             else alert("Please check your internet connection.");
+	         }
+	     );
+	    myFunction();
+}
+
 function loadlist(data){ 
 	$.each(topics, function(index, element) {
 			$('#tags_list').prepend(' <label><input type="checkbox" name="tag_check" value='+element+' onchange = addcheck(this.value) /> '+ element+ ' </label>');
