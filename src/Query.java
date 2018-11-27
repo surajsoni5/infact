@@ -117,8 +117,9 @@ public class Query {
 			"with helper(post_id) as (" + 
 			"	select pending_posts.*" + 
 			"	from volunteer_topics,pending_posts,post_topics" + 
-			"	where volunteer_topics.user_id=? and pending_posts.post_id=post_topics.post_id and pending_posts.score < "+ Config.threshold + 
-			"		and post_topics.topic_name=volunteer_topics.topic_name and pending_posts.current_volunteer is null" + 
+			"	where volunteer_topics.user_id=? and pending_posts.post_id=post_topics.post_id and pending_posts.score <= 4 and" + 
+			"		post_topics.topic_name=volunteer_topics.topic_name and pending_posts.current_volunteer is null" + 
+			"		and  ? not in (select responses.user_id from responses,pending_posts where responses.post_id= pending_posts.post_id )" + 
 			")" + 
 			"update pending_posts " + 
 			"set current_volunteer=?, assigned_timestamp=now()" + 
@@ -126,15 +127,16 @@ public class Query {
 			"	(select p.post_id " + 
 			"	from ((helper natural join posts) natural left outer join admin_posts)  p " + 
 			"	order by admin_id is not null,created_timestamp limit 1)" + 
-			"returning post_id";
+			"returning post_id;";
 	public static final String comments ="select comment,response_id from responses where post_id=?";
 	public static final String post_id_to_data ="select title,author_name,body,image_metadata,created_timestamp from posts where post_id=?" ;
 	// Update responses and pending to published posts
-	public static final String addresponse = "insert into responses values (?,?,?,?)";  
+	public static final String addresponse = "insert into responses values (default,?,?,?,?,now())";  
 	public static final String increasescore=
 			"update pending_posts " + 
 			"set current_volunteer=null,score=score+1" + 
 			"where pending_posts.post_id=?" ;
+	public static final String updaterating="update volunteers set rating=rating+?  where user_id =(select user_id from responses where response_id=?)";
 	public static final String delete_pending_posts="delete from pending_posts where post_id=?";
 	public static final String insert_published_posts="insert into published_posts values (?,now())";
 }

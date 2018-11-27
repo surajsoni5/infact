@@ -187,7 +187,6 @@ function LoadVolunteer() {
 		{},
 		function (data, status) {
 			if (status != 'success') { }//Do something
-			data = JSON.parse(data)
 			if (data.isVolunteer) {
 				if (data.post_available) {
 					// TODO: handle jpg and png and confirm security issues
@@ -198,7 +197,6 @@ function LoadVolunteer() {
 					$('#comment_list').empty()
 					$.each(data.comments, function (index, element) {
 						console.log(element.comment+element.response_id)
-
 						$('#comment_list').append(
 							'<li class="list-group-item" >'+
 							'<div>'+element.comment +'</div>'+

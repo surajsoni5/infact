@@ -32,7 +32,7 @@ create table topics
 	 primary key (name)
 	);
 
-create table volunteers
+create table volunteers -- See what jaggu did , use default
 	(user_id		    BIGINT , 
      admin_id           BIGINT NOT NULL,
      rating             numeric(3,2) check (rating >=0) NOT NULL,

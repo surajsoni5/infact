@@ -56,12 +56,14 @@ public class getVolunteer extends HttpServlet {
 	            	}else {
 	            		stmt2.setInt(1, userid);
 	            		stmt2.setInt(2, userid);
-	            		stmt2.execute();
+	            		stmt2.setInt(3, userid);
+	            		System.out.println(stmt2.execute());
 	            		ResultSet rset1 = stmt2.getResultSet();
-	            		if(rset1.next()) {
+	            		if(rset1.next()) {  
+	            			System.out.println(true);
 	            			post_id=rset1.getInt(1);
 	            			System.out.println(post_id);
-	            		}
+	            		}else System.out.println(false);
 	            	}
 	                conn.commit();
 	            }
@@ -122,7 +124,7 @@ public class getVolunteer extends HttpServlet {
 				System.out.println("He is a not Application");
 			}else {
 				out.put("isApplication", true);
-				System.out.println("He is a  Application");
+				System.out.println("He is a Application");
 			}
 		}
 		System.out.println(out.toString());

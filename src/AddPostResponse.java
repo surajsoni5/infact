@@ -39,6 +39,9 @@ public class AddPostResponse extends HttpServlet {
 		int userid=(int) session.getAttribute("userid");
 		int postid= Integer.parseInt(request.getParameter("post_id"));
 		String comment= request.getParameter("comment");
+		String [] liked_comments=request.getParameter("liked_comments").split(",");
+		String [] unliked_comments=request.getParameter("unliked_comments").split(",");
+		
 		Boolean volresponse = Integer.parseInt(request.getParameter("response"))==1?true: false;
     	int success=-1;
     	try (Connection conn = DriverManager.getConnection(Config.url, Config.user, Config.password))
@@ -47,8 +50,7 @@ public class AddPostResponse extends HttpServlet {
             try(
             		PreparedStatement stmt1 = conn.prepareStatement(Query.addresponse);
             		PreparedStatement stmt2 = conn.prepareStatement(Query.increasescore);
-//            		PreparedStatement stmt3 = conn.prepareStatement(Query.delete_pending_posts);
-//            		PreparedStatement stmt4 = conn.prepareStatement(Query.insert_published_posts);
+            		PreparedStatement stmt3 = conn.prepareStatement(Query.updaterating);
             		) {
                 stmt1.setInt(1, postid);
                 stmt1.setInt(2,userid);
@@ -58,6 +60,19 @@ public class AddPostResponse extends HttpServlet {
                 System.out.println(success);
                 stmt2.setInt(1, postid);
                 success=stmt2.executeUpdate();
+                for(int i=0;i<liked_comments.length;i++) {
+                	if(liked_comments[i].isEmpty())continue; ////////// 
+                	stmt3.setInt(1, 2);///// Configure 
+                	stmt3.setLong(2, Integer.parseInt(liked_comments[i]));
+                	stmt3.addBatch();
+                }
+                for(int i=0;i<unliked_comments.length;i++) {
+                	if(unliked_comments[i].isEmpty())continue;
+                	stmt3.setInt(1, -2);///// Configure
+                    stmt3.setLong(2, Integer.parseInt(unliked_comments[i]));
+                    stmt3.addBatch();
+                }
+                stmt3.executeBatch();
                 System.out.println(success);
                 conn.commit();
             }
