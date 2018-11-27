@@ -4,7 +4,7 @@
     /* margin-top: 10%; */
     font-weight: 600;
     padding: 5%;
-    font-size: 1.1vw;
+    font-size: 100%;
     margin: auto;
 }
 
@@ -12,7 +12,7 @@
     padding: 3%;
     /* margin: auto; */
     align-self: center;
-    font-size: 1.1vw;
+    font-size: 100%;
 }
 
 .fixed{
@@ -22,7 +22,7 @@
 .stat-con {
     padding: 10%;
     
-    font-size: 1.1vw;
+    font-size: 100%;
     margin : auto;
     margin-top: 10%;
 }

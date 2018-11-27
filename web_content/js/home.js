@@ -223,6 +223,7 @@ function LoadPosts(limit){
         			` <img src= "` + `getPostImage?post_id=` + data[i].post_id +`" id="image" alt=" `+ " Image" +  ` "> ` +
         			 r3 + data[i].title + r4 + data[i].body + r5 + r6; 
         			$("#UserPosts").append(r);
+        			
         		}
         	}
         	
