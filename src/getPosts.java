@@ -102,7 +102,6 @@ public class getPosts extends HttpServlet {
 			System.out.println(json);
 			response.getWriter().print(json);
 			response.setContentType("application/json;charset=UTF-8");
-			 
 	}
 
 	private Integer min(int postlimit, Integer limit) {

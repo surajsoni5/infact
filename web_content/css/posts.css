@@ -36,30 +36,32 @@ img{
 .UserPosts {
     /* display: none; */ 
     margin-top: 5%;
+    
 }
 
 .User-Option-row{
 	margin: 10px;
 	padding: 10px;
+	display: "flex";
 }
 .View_Post {
 	margin-left:3%;
 	margin-right:3%;
 	margin-bottom:2%;
-	position:absolute;
+	/* position:absolute;
 	right: 0;
-	bottom:0;
-	padding: 3%;
+	bottom:0; */
 	max-width: 200px;
 	width: 10vw;
 }
 
 .Like_Post {
-	margin-left:3%;
+	/* margin-left:3%; */
 	margin-bottom:2%;
-	position:absolute;
+	/* position:absolute;
 	left: 0;
-	bottom:0;
+	bottom:0; */
+	
 	padding: 2%;
 	max-width: 200px;
 	width: 10vw;
@@ -68,9 +70,9 @@ img{
 .Save_Post{
 	margin-left:3%;
 	margin-bottom:2%;
-	position:absolute;
+	/* position:absolute;
 	bottom:0;
-	left: 15.5vw;
+	left: 15.5vw; */
 	padding: 2%;
 	max-width: 200px;
 	width: 10vw;
@@ -148,16 +150,18 @@ img{
     
 }
 .Mypost-submain{
+	 padding: 2%; 
 	display: block;
 	height: 100%;
+	 background-color: ghostwhite; 
 }
 
 .Mypost-main{
-    margin: 2%;
+    margin: 2%; 
     padding: 2%;
     /* box-shadow: 1vw 1vw lightgray; */
     border-radius: 1vw;
-    background-color: ghostwhite;
+    /*background-color: ghostwhite; */
 }
 
 .Mypost-:hover{

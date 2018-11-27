@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <link rel="stylesheet" href="./css/adminposts.css">
   <link rel="stylesheet" href="./css/posts.css">
+   <link rel="stylesheet" href="./css/base.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
@@ -66,11 +67,25 @@
               </nav>
       <!-- users Posts -->
       <div class= "container-fluid UserPosts">
-        <div class = "row Mypost-row">
+        <div class = "row Mypost-row" data-value="1">
           <div class="col-lg-1"> </div>
-          <div class="col-lg-9 "> 
-            <div class="row Mypost-main" >
-              <div class = "row">
+          <div class="col-lg-11 Mypost-main"> 
+            <div class="row Mypost-submain" >
+            <div class = "row stat-row"> 
+            	<img class = "stat-img" alt="responses-icon" src="./images/response.png">
+            	<div class = "stat-total">
+            		50
+            	</div>
+            	<img class = "stat-img" alt="correct-icon" src="./images/correct.png">
+            	<div class = "stat-upvote">
+            		35
+            	</div>
+            	<img class = "stat-img" alt="correct-icon" src="./images/incorrect.png">
+            	<div class = "stat-downvote">
+            		25
+            	</div>
+            </div>
+              <div class = "row ">
                 <div class="col-lg-5 "> 
                   <div class = "Mypost-image">
                       <img src="./images/login/login_back.jpg" alt="Italian Trulli">
@@ -89,15 +104,47 @@
                 </div>
               </div>
                   <div class="row User-Option-row" >
-                        <button class = "options Mybtn" type="button" > Approve </button>
-                        <button class = "options Mybtn " type="button" > Reject </button>  
+                        <button onclick="approve_post()" class = "Mybtn Accept_btn" type="button"  > Approve </button>
+                        <button onclick="reject_post()" class = "Mybtn Reject_btn" type="button" > Reject </button>  
+                  		<button onclick="view_responses_post()" class = "Mybtn View_responses_btn" type="button" > View Responses </button>
+                  		<button onclick="view_post()" class = "Mybtn View_btn" type="button" > View Post</button>
+                  </div>
+                </div>
+              </div>
+          </div>
+
+        <div class = "row Mypost-row" data-value="1">
+          <div class="col-lg-1"> </div>
+          <div class="col-lg-9 "> 
+            <div class="row Mypost-main" >
+              <div class = "row Mypost-submain">
+                <div class="col-lg-5 "> 
+                  <div class = "Mypost-image">
+                      <img src="./images/login/login_back.jpg" alt="Italian Trulli">
+                  </div>
+                </div>
+                <div class="col-lg-7"> 
+                  <div class="Mypost-title">
+                    We made it Check the first post ever created !!
+                  </div>
+                  <div class="Mypost-body">
+                      Material is an adaptable system of guidelines, components,
+                       and tools that support the best practices of user interface design. 
+                       Backed by open-source code, Material streamlines collaboration between 
+                       designers and developers, and helps teams quickly build beautiful products.
+                  </div>  
+                </div>
+              </div>
+                  <div class="row User-Option-row" >
+                        <button onclick="approve_post()" class = "Mybtn Accept_btn" type="button"  > Approve </button>
+                        <button onclick="reject_post()" class = "Mybtn Reject_btn" type="button" > Reject </button>  
                   </div>
                 </div>
 
               </div>
             <div class="col-lg-2 "> 
-              <div class="row Mypost-main stat-con">
-                <div class="container">
+              <div class="row Mypost-row ">
+                <div class="container Mypost-main">
                   <div class="row  stat-text"> 
                     Total Responses
                   </div>
@@ -116,7 +163,62 @@
                   <div class="row stat-ans">
                     15
                   </div>
-                  <button class = " Mybtn " type="button" > View Responses </button>
+                  <button onclick="view_responses_post()" class = " Mybtn " type="button" > View Responses </button>
+                </div>
+              </div>
+            </div>              
+          </div>
+        <div class = "row Mypost-row" data-value="1">
+          <div class="col-lg-1"> </div>
+          <div class="col-lg-9 "> 
+            <div class="row Mypost-main" >
+              <div class = "row Mypost-submain">
+                <div class="col-lg-5 "> 
+                  <div class = "Mypost-image">
+                      <img src="./images/login/login_back.jpg" alt="Italian Trulli">
+                  </div>
+                </div>
+                <div class="col-lg-7"> 
+                  <div class="Mypost-title">
+                    We made it Check the first post ever created !!
+                  </div>
+                  <div class="Mypost-body">
+                      Material is an adaptable system of guidelines, components,
+                       and tools that support the best practices of user interface design. 
+                       Backed by open-source code, Material streamlines collaboration between 
+                       designers and developers, and helps teams quickly build beautiful products.
+                  </div>  
+                </div>
+              </div>
+                  <div class="row User-Option-row" >
+                        <button onclick="approve_post()" class = "Mybtn Accept_btn" type="button"  > Approve </button>
+                        <button onclick="reject_post()" class = "Mybtn Reject_btn" type="button" > Reject </button>  
+                  </div>
+                </div>
+
+              </div>
+            <div class="col-lg-2 "> 
+              <div class="row Mypost-row ">
+                <div class="container Mypost-main">
+                  <div class="row  stat-text"> 
+                    Total Responses
+                  </div>
+                  <div class=" row stat-ans">
+                    50
+                  </div>
+                  <div class="row stat-text"> 
+                    Positive  
+                  </div>
+                  <div class="row stat-ans">
+                    35
+                  </div>
+                  <div class="row stat-text"> 
+                    Negative 
+                  </div>
+                  <div class="row stat-ans">
+                    15
+                  </div>
+                  <button onclick="view_responses_post()" class = " Mybtn " type="button" > View Responses </button>
                 </div>
               </div>
             </div>              
@@ -185,7 +287,7 @@
                 </div>              
               </div>
 
-              <div class = "row Mypost-row">
+          <div class = "row Mypost-row">
           <div class="col-lg-1"> </div>
           <div class="col-lg-9 "> 
             <div class="row Mypost-main" >
