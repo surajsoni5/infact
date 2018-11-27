@@ -29,9 +29,13 @@ public class Query {
 	
 	/** Get Posts**/
 	public static final String getPosts_query = 
-			"select posts.post_id,posts.created_timestamp,posts.image,posts.body,posts.title,posts.author_name "
+			"select DISTINCT posts.post_id,posts.created_timestamp,posts.image,posts.body,posts.title,posts.author_name "
 			+ "from posts,post_topics,published_posts "
-			+ "where published_posts.post_id =  posts.post_id and posts.post_id = post_topics.post_id and posts.created_timestamp < (?) and post_topics.topic_name in (select topic_name from user_topics where user_id = (?) ) order by posts.created_timestamp limit (?) "; //Expand 
+			+ "where published_posts.post_id =  posts.post_id and"
+			+ " posts.post_id = post_topics.post_id and posts.created_timestamp < (?) and"
+			+ " post_topics.topic_name in "
+			+ "(select topic_name from user_topics where user_id = (?) ) "
+			+ "order by posts.created_timestamp limit (?) "; //Expand 
 	public static final String getPostImage_query = "select image from posts where post_id = (?)";
 	/** User Specific **/
 	public static final String UserInfo_query = "select * from users where user_id = (?)";

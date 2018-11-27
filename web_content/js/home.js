@@ -35,64 +35,64 @@ const click_color = "#333333";
 const unclick_color = "#57b846";
 var upvoted = -1;
 var postid = null;
-var liked_comments=[]
-var unliked_comments=[]
+var liked_comments = []
+var unliked_comments = []
 
 $(document).ready(function () {
 
-		$.ajax({
-			url: 'getUserTopics',
-			type: 'get',
-			success: function (response) {
-				var data = response.data;
-				if (response.status == true) {
-					if (typeof data == 'undefined' || data.length == 0) {
-						// alert("No User Topics")
-						// TODO: Add Model ( pop-up to select topics )
-						selected_topics = [];
-						$('#tags .close').css('display', 'none');
-						$("#tags").modal('show');
-						gettags();
-						
-					} else {
-						var usertopic = data;
-						for (var i = 0; i < data.length; i++) {
-							usertopic[i] = data[i].topic_name;
-						}
-						console.log(" New " + JSON.stringify(usertopic));
-						Cookies.set('user_topics', JSON.stringify(usertopic));
-						LoadPosts(2);
+	$.ajax({
+		url: 'getUserTopics',
+		type: 'get',
+		success: function (response) {
+			var data = response.data;
+			if (response.status == true) {
+				if (typeof data == 'undefined' || data.length == 0) {
+					// alert("No User Topics")
+					// TODO: Add Model ( pop-up to select topics )
+					selected_topics = [];
+					$('#tags .close').css('display', 'none');
+					$("#tags").modal('show');
+					gettags();
+
+				} else {
+					var usertopic = data;
+					for (var i = 0; i < data.length; i++) {
+						usertopic[i] = data[i].topic_name;
 					}
+					console.log(" New " + JSON.stringify(usertopic));
+					Cookies.set('user_topics', JSON.stringify(usertopic));
+					LoadPosts(2);
 				}
 			}
-		});
-
-	$('#topic-save').click(function(){
-		if(selected_topics == null || selected_topics.length < 3){
-//			$("#error").html('Please select atleast 3 topics');
-			alert('Please select atleast 3 topics');
-		}else {
-			$.post(
-			        'setUserTopics',
-			        {
-			            values: selected_topics+'',
-			            sop: $("#sop").val()
-			        },
-			        function(data,status,request){
-			            if(status=='success'){
-			            	if(request.getResponseHeader('require_auth')=='yes'){
-			            		window.location.replace('index.html')
-			            	}else{
-			            		window.location.replace('home.html')
-			            	}
-			            }else {
-			            	alert('Failed to Add!! Please try again')
-			            }
-			        }
-			    );
 		}
-	});	
-	
+	});
+
+	$('#topic-save').click(function () {
+		if (selected_topics == null || selected_topics.length < 3) {
+			//			$("#error").html('Please select atleast 3 topics');
+			alert('Please select atleast 3 topics');
+		} else {
+			$.post(
+				'setUserTopics',
+				{
+					values: selected_topics + '',
+					sop: $("#sop").val()
+				},
+				function (data, status, request) {
+					if (status == 'success') {
+						if (request.getResponseHeader('require_auth') == 'yes') {
+							window.location.replace('index.html')
+						} else {
+							window.location.replace('home.html')
+						}
+					} else {
+						alert('Failed to Add!! Please try again')
+					}
+				}
+			);
+		}
+	});
+
 	$('#Logout_button').click(function () {
 		Logout();
 	});
@@ -156,8 +156,8 @@ $(document).ready(function () {
 					comment: comment,
 					response: response,
 					post_id: postid,
-					liked_comments : liked_comments+'',
-					unliked_comments : unliked_comments+''
+					liked_comments: liked_comments + '',
+					unliked_comments: unliked_comments + ''
 				},
 				function (data, status) {
 					console.log(data)
@@ -197,12 +197,12 @@ function LoadVolunteer() {
 					$('.post-body').html(data.body);
 					$('#comment_list').empty()
 					$.each(data.comments, function (index, element) {
-						console.log(element.comment+element.response_id)
+						console.log(element.comment + element.response_id)
 						$('#comment_list').append(
-							'<li class="list-group-item" >'+
-							'<div>'+element.comment +'</div>'+
-							'<button  onclick="like(\''+element.response_id+'\',this )"> <i  class="material-icons " style="font-size:36px;" >cloud</i> </button>'+
-							'<button  onclick="unlike(\''+element.response_id+'\',this)"> <i class="material-icons " style="font-size:36px;" >cloud</i> </button>'+
+							'<li class="list-group-item" >' +
+							'<div>' + element.comment + '</div>' +
+							'<button  onclick="like(\'' + element.response_id + '\',this )"> <i  class="material-icons " style="font-size:36px;" >cloud</i> </button>' +
+							'<button  onclick="unlike(\'' + element.response_id + '\',this)"> <i class="material-icons " style="font-size:36px;" >cloud</i> </button>' +
 							'</li>'
 						);
 						// $('#comment_list').append('<li class="list-group-item">' + element.comment + ' <i></i><span>1</span><i></i>    </li>')
@@ -217,34 +217,34 @@ function LoadVolunteer() {
 			} else if (data.isApplication) {
 				alert("Application Pending")
 			} else {
-				 window.location.replace('volunteer_app.html')
+				window.location.replace('volunteer_app.html')
 			}
 		}
 	);
 }
-function like(comment,but){
-	console.log(but.parentNode);	
-	if(jQuery.inArray(comment, liked_comments) !== -1){
+function like(comment, but) {
+	console.log(but.parentNode);
+	if (jQuery.inArray(comment, liked_comments) !== -1) {
 		liked_comments.pop(comment);
-		but.parentNode.children[1].children[0].style.color='black'
-	}else if(jQuery.inArray(comment, unliked_comments) !== -1){
+		but.parentNode.children[1].children[0].style.color = 'black'
+	} else if (jQuery.inArray(comment, unliked_comments) !== -1) {
 		unliked_comments.pop(comment);
-		but.parentNode.children[2].children[0].style.color='black'
-	}else{
+		but.parentNode.children[2].children[0].style.color = 'black'
+	} else {
 		liked_comments.push(comment);
-		but.parentNode.children[1].children[0].style.color='green'
+		but.parentNode.children[1].children[0].style.color = 'green'
 	}
 }
-function unlike(comment,but){
-	if(jQuery.inArray(comment, liked_comments) !== -1){
+function unlike(comment, but) {
+	if (jQuery.inArray(comment, liked_comments) !== -1) {
 		liked_comments.pop(comment);
-		but.parentNode.children[1].children[0].style.color='black'
-	}else if(jQuery.inArray(comment, unliked_comments) !== -1){
+		but.parentNode.children[1].children[0].style.color = 'black'
+	} else if (jQuery.inArray(comment, unliked_comments) !== -1) {
 		unliked_comments.pop(comment);
-		but.parentNode.children[2].children[0].style.color='black'
-	}else{
+		but.parentNode.children[2].children[0].style.color = 'black'
+	} else {
 		unliked_comments.push(comment);
-		but.parentNode.children[2].children[0].style.color='red'
+		but.parentNode.children[2].children[0].style.color = 'red'
 	}
 }
 
