@@ -127,7 +127,7 @@ public class Query {
 			"	from ((helper natural join posts) natural left outer join admin_posts)  p " + 
 			"	order by admin_id is not null,created_timestamp limit 1)" + 
 			"returning post_id";
-	public static final String comments ="select comment from responses where post_id=?";
+	public static final String comments ="select comment,response_id from responses where post_id=?";
 	public static final String post_id_to_data ="select title,author_name,body,image_metadata,created_timestamp from posts where post_id=?" ;
 	// Update responses and pending to published posts
 	public static final String addresponse = "insert into responses values (?,?,?,?)";  
