@@ -17,40 +17,41 @@
 </head>
 
 <body>
-  <div class="modal fade" id="tags" tabindex="-1" role="dialog"   data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Select Feed Topics (at least 3)</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                	<p id="error"></p>
-                    <div class="row justify-content-center">
-                        <div class="col-sm-9">
-                            <input id="searchbox" class="form-control form-control-sm form-control-borderless" type="search" onkeyup="myFunction()"
-                                placeholder="Search topics or keywords">
-                        </div>
-                        <div class="col-sm-3">
-                            <button class="btn btn-sm btn-success" type="submit">Search</button>
-                        </div>
-
-                    </div>
-                    <!--end of col-->
-                    <div id="tags_list">
-                        <!-- <label><input type="checkbox" name="type" value="1111" /> fafa </label> -->
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="topic-save" >Save</button>
-                </div>
-            </div>
+  <div class="modal fade" id="tags" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Select Feed Topics (at least 3)</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
+        <div class="modal-body">
+          <p id="error"></p>
+          <div class="row justify-content-center">
+            <div class="col-sm-9">
+              <input id="searchbox" class="form-control form-control-sm form-control-borderless" type="search" onkeyup="myFunction()"
+                placeholder="Search topics or keywords">
+            </div>
+            <div class="col-sm-3">
+              <button class="btn btn-sm btn-success" type="submit">Search</button>
+            </div>
+
+          </div>
+          <!--end of col-->
+          <div id="tags_list">
+            <!-- <label><input type="checkbox" name="type" value="1111" /> fafa </label> -->
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="topic-save">Save</button>
+        </div>
+      </div>
     </div>
-    
+  </div>
+
   <!-- Grey with black text -->
   <!-- Navigation Bar -->
   <nav class="navbar  fixed-top navbar-expand-lg navbar-light Mynav">
@@ -105,43 +106,44 @@
   </nav>
   <!-- users Posts -->
   <div class="container-fluid UserPosts" id="UserPosts">
-  
-  
-  
-	<div class = "row Mypost-row">
-	<div class="col-lg-1"> </div>
-	<div class="col-lg-10 Mypost-main">
-	<div class="row Mypost-submain" >
-	<div class = "row">
-      <div class="col-lg-5 "> 
-        <div class = " Mypost-image"></div>
-        <img src="./images/login/login_back.jpg" alt="Italian Trulli">
-      </div>
-      <div class="col-lg-7"> 
-        <div class=" Mypost-title">
-        We made it Check the first post ever created !!
+
+
+
+    <div class="row Mypost-row">
+      <div class="col-lg-1"> </div>
+      <div class="col-lg-10 Mypost-main">
+        <div class="row Mypost-submain">
+          <div class="row">
+            <div class="col-lg-5 ">
+              <div class=" Mypost-image"></div>
+              <img src="./images/login/login_back.jpg" alt="Italian Trulli">
+            </div>
+            <div class="col-lg-7">
+              <div class=" Mypost-title">
+                We made it Check the first post ever created !!
+              </div>
+
+              <div class=" Mypost-body">
+                Material is an adaptable system of guidelines, components,
+                and tools that support the best practices of user interface design.
+                Backed by open-source code, Material streamlines collaboration between
+                designers and developers, and helps teams quickly build beautiful products.
+              </div>
+
+            </div>
+          </div>
+          <div class="row User-Option-row">
+            <button class="Mybtn Like_Post" type="button" id="Like_Post"> Like </button>
+            <button class="Mybtn Save_Post" type="button" id="Save_Post"> Save </button>
+            <button onclick="viewFunction(this)" class="Mybtn View_Post" type="button" id="View_Post" value="small">
+              View </button>
+          </div>
         </div>
-        
-        <div class=" Mypost-body">
-        Material is an adaptable system of guidelines, components,
-              and tools that support the best practices of user interface design.
-              Backed by open-source code, Material streamlines collaboration between
-              designers and developers, and helps teams quickly build beautiful products.
-        </div> 
-        	
-			</div>
-		</div>
-      <div class="row User-Option-row">
-      	 <button class = "Mybtn Like_Post" type="button" id="Like_Post" > Like </button>
-      	 <button class = "Mybtn Save_Post" type="button" id="Save_Post" > Save </button>
-		 <button onclick="viewFunction(this)" class = "Mybtn View_Post" type="button" id="View_Post" value="small"> View </button>
-		  </div>
-  </div> 
-  </div>
-  </div>
-  
-  
- 
+      </div>
+    </div>
+
+
+
     <div class="row Mypost-row">
       <div class="col-lg-1"> </div>
       <div class="col-lg-9 ">
@@ -343,24 +345,23 @@
             <div class="col-sm-3">
               <button class="btn btn-sm btn-success" type="submit">Search</button>
             </div>
-
           </div> -->
           <!--end of col-->
           <div>
             <ul class="list-group" id="comment_list">
-              
+
               <li class="list-group-item" data-value="">
-               <div>
-                 First item
-               </div>  
-               <button class="btn"> <i class="material-icons" style="font-size:36px;" >cloud</i> </button>
+                <div>
+                  First item
+                </div>
+                <button class="btn"> <i class="material-icons" style="font-size:36px;">cloud</i> </button>
               </li>
-                
-            
+
+
               <li class="list-group-item">Second item</li>
               <li class="list-group-item">Third item</li>
             </ul>
-            
+
             <!-- <label><input type="checkbox" name="type" value="1111" /> fafa </label> -->
           </div>
 
@@ -372,7 +373,7 @@
       </div>
     </div>
   </div>
-  
+
 </body>
 
 </html>
