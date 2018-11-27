@@ -33,8 +33,8 @@ var r6 = `</div>
 var response = null;
 const click_color = "#333333";
 const unclick_color = "#57b846";
-var upvoted=-1;
-var postid=null;
+var upvoted = -1;
+var postid = null;
 
 
 $(document).ready(function () {
@@ -121,7 +121,7 @@ $(document).ready(function () {
 			alert('Please add Response');
 		} else if (comment == null || comment.length == 0) {
 			alert('Please add Comment');
-		}else{
+		} else {
 			console.log("aaaa")
 			$.post(
 				'AddPostResponse',
@@ -130,12 +130,11 @@ $(document).ready(function () {
 					response: response,
 					post_id: postid
 				},
-				function(data,status){
+				function (data, status) {
 					console.log(data)
-					if(status=='success' && JSON.parse(data).status){
-						
+					if (status == 'success' && JSON.parse(data).status) {
 						LoadVolunteer();
-					}else{
+					} else {
 						//Couldn't sucseed
 					}
 				}
@@ -149,11 +148,11 @@ function LoadHome() {
 
 }
 
-function upvote(){
+function upvote() {
 
 }
 
-function LoadVolunteer() {	
+function LoadVolunteer() {
 	$.post(
 		'getVolunteer',
 		{},
@@ -163,10 +162,20 @@ function LoadVolunteer() {
 			if (data.isVolunteer) {
 				if (data.post_available) {
 					// TODO: handle jpg and png and confirm security issues
-					postid=data.post_id;
-					$('.vol-image').attr('src','getPostImage?post_id=' + data.post_id);
+					postid = data.post_id;
+					$('.vol-image').attr('src', 'getPostImage?post_id=' + data.post_id);
 					$('.post-title').html(data.title);
 					$('.post-body').html(data.body);
+					$('#comment_list').empty()
+					$.each(data.comments, function (index, element) {
+						console.log(element.comment)
+						$('#comment_list').append(
+							'<div>'+element.comment +'</div>'+
+							'<button onclick="like(\''+element.comment+'\' , this)"> <i class="material-icons" style="font-size:36px;" >cloud</i> </button>'+
+							'<button onclick="unlike(\''+element.comment+'\',this)"> <i class="material-icons" style="font-size:36px;" >cloud</i> </button>'
+						);
+						// $('#comment_list').append('<li class="list-group-item">' + element.comment + ' <i></i><span>1</span><i></i>    </li>')
+					});
 					$('#UserPosts').hide();
 					$('#VolunteerPosts').show();
 				} else {
@@ -181,6 +190,10 @@ function LoadVolunteer() {
 			}
 		}
 	);
+}
+function like(comment,button){
+	button.children[0].style.color = "red";
+	console.log(button)
 }
 
 function Logout() {

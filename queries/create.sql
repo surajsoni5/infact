@@ -67,6 +67,7 @@ create table published_posts
 create table pending_posts
     (post_id        BIGINT ,
 	 assigned_timestamp     timestamp,
+     added_timestamp     timestamp,
 	 current_volunteer		BIGINT,
 	 score              numeric(3,1),
      primary key (post_id),
@@ -137,10 +138,12 @@ create table application_topics
     );
 
 create table responses
-    (post_id        BIGINT,
+    (response_id       SERIAL,
+     post_id        BIGINT,
      user_id        BIGINT,
      comment        varchar(1000),
      verify         boolean,
+     response_timestamp    timestamp,
      primary key(user_id,post_id),
      foreign key (post_id) references posts
         on delete cascade,

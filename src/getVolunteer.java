@@ -74,7 +74,10 @@ public class getVolunteer extends HttpServlet {
 	                conn.setAutoCommit(true);
 	            }
 	            if(post_id!=-1) {
-	            	try(PreparedStatement stmt = conn.prepareStatement(Query.post_id_to_data)){
+	            	try(
+	            			PreparedStatement stmt = conn.prepareStatement(Query.post_id_to_data);
+	            			PreparedStatement stmt1 = conn.prepareStatement(Query.comments)
+	            			){
 	            		stmt.setInt(1, post_id);
 	            		ResultSet rset= stmt.executeQuery();
 	            		if(rset.next()) {
@@ -86,6 +89,8 @@ public class getVolunteer extends HttpServlet {
 	            			out.put("image_metadata", rset.getString(4));
 	            			out.put("created_timestamp",  rset.getTimestamp(5).toString()); 
 	            			out.put("post_id", post_id);   
+	            			stmt1.setInt(1, post_id);
+	            			out.putArray("comments").addAll(DbHelper.resultSetToJson(stmt1.executeQuery()));
 	            		}
 	            	}catch(Exception ex) {
 	            		out.put("post_available", false);
@@ -95,6 +100,7 @@ public class getVolunteer extends HttpServlet {
 	            	}
 	            }else {
 	            	out.put("post_available", false);
+	            	
 	            }
 	            
 	        } catch (Exception e) {
