@@ -16,7 +16,7 @@ public class Query {
 	public static final String getUserTopics_query = "select topic_name from user_topics where user_id = (?)";
 	public static final String getVolunteerTopics_query = "select topic_name from volunteer_topics where user_id = (?)";
 	
-	public static final String addUserTopic_query = "insert into user_topics values "; // remaining accordingly in servlet (topic,user_id)
+	public static final String addUserTopic_query = "insert into user_topics values (?,?)"; // remaining accordingly in servlet (user_id,topic_name)
 	public static final String removeUserTopic_query = "delete from user_topics where user_id = (?) and topic_name = (?)";
 	public static final String addVolunteerTopic_query = "insert into volunteer_topics values "; // remaining accordingly in servlet (topic,volunteer_id)
 	//public static final String removeVolunteerTopic_query = "delete from volunteer_topics where topic_name = (?) and user_id = (?)";

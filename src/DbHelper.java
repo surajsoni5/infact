@@ -34,6 +34,8 @@ public class DbHelper {
 		TIMESTAMP,
 	}
 	
+	
+	
 	/**
 	 * Execute a query and return results as a list of lists
 	 */
@@ -70,6 +72,41 @@ public class DbHelper {
     	
     	return res;
     }
+	
+	protected static String executeBatchUpdateJson(String query, ParamType[] paramTypes[], Object[] params[]) {
+		boolean success = false;
+		try (Connection conn = DriverManager.getConnection(Config.url, Config.user, Config.password))
+        {
+            conn.setAutoCommit(false);
+            
+            try(PreparedStatement stmt = conn.prepareStatement(query)) {
+            	
+            	for(int i=0;i<paramTypes.length;i++) {
+            		setParams(stmt, paramTypes[i], params[i]);
+        			stmt.addBatch();
+        		}
+            	stmt.executeBatch();
+            	
+                conn.commit();
+                success = true;
+            }
+            catch(Exception ex)
+            {
+                conn.rollback();
+                throw ex;
+            }
+            finally{
+                conn.setAutoCommit(true);
+            }
+        } catch (Exception e) {
+            return errorJson(e.getMessage()).toString();
+        }
+    	
+		boolean status = success;
+    	ObjectNode node = mapper.createObjectNode();
+    	node.put(STATUS_LABEL, status);
+    	return node.toString();
+	}
 	
 	/**
 	 * Executes query and returns results as JSON,

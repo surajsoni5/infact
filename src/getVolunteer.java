@@ -126,6 +126,7 @@ public class getVolunteer extends HttpServlet {
 		}
 		System.out.println(out.toString());
 		response.getWriter().write(out.toString());
+		response.setContentType("application/json;charset=UTF-8");
 	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

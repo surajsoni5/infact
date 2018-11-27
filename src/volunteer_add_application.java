@@ -54,7 +54,7 @@ public class volunteer_add_application extends HttpServlet {
 		System.out.println(sop);
 		System.out.println(new Timestamp(System.currentTimeMillis()));
 //		executeUpdateJson(Query.addVolunteer, new DbHelper.ParamType[] {DbHelper.ParamType.INT,DbHelper.ParamType.}, new Object[] {});
-		Boolean success = false;
+		boolean success = false;
 		try (Connection conn = DriverManager.getConnection(Config.url, Config.user, Config.password)){
             conn.setAutoCommit(false);
             try(
@@ -70,10 +70,10 @@ public class volunteer_add_application extends HttpServlet {
         			System.out.println(tags[i]);
         			stmt1.setString(2, tags[i]);    
         			stmt1.addBatch();
-        		}
-                stmt1.executeBatch();
-                success=true;
+        		} 
+        		stmt1.executeBatch();
                 conn.commit();
+                success=true;
             }
             catch(Exception ex){
                 conn.rollback();

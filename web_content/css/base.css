@@ -77,9 +77,12 @@ textarea:-ms-input-placeholder {color: #999999;}
 label {
   display: block;
   color: black;
-  margin: 0;
+  margin: 2%;
 }
 
+.form-control{
+	margin: 2%;
+}
 button {
     outline: none !important;
     border: none;

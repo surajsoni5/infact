@@ -1,7 +1,12 @@
 var topics=[];
 var selected_topics=[]
 $(document).ready(function () {
-     gettags();
+	$('#topics-btn').click(function(){
+		if(topics.length == 0){
+			gettags();
+		}
+		
+	});
 });
 
 function gettags(){
@@ -9,7 +14,7 @@ function gettags(){
 	         'gettags',
 	         null,
 	         function(data,status){
-	             if(status=='success'){
+	             if(status=='success' && data.status == true){
 	            	 $.each(data.data, function(index, element) {
 	            		 topics.push( element.name)
 	            	 });
@@ -22,9 +27,11 @@ function gettags(){
 	    myFunction();
 }
 
+
 function loadlist(data){ 
+	$('#tags_list').empty();
 	$.each(topics, function(index, element) {
-			$('#tags_list').prepend(' <label><input type="checkbox" name="tag_check" value='+element+' onchange = addcheck(this.value) /> '+ element+ ' </label>');
+			$('#tags_list').prepend(' <label><input type="checkbox" name="tag_check" value="'+element+'" onchange = addcheck(this.value) /> '+ element+ ' </label>');
 			
     });
 }
@@ -38,7 +45,7 @@ function myFunction(){
     console.log($("#searchbox").val())
      $('#tags_list').empty()
     $.each(topics, function(index, element) {
-    	if(element.match("^"+$("#searchbox").val() )){
+    	if(element.toLowerCase().match("^"+$("#searchbox").val().toLowerCase()  )){
     		$('#tags_list').prepend(' <label><input type="checkbox" name="tag_check" value='+element+' onchange = addcheck(this.value) /> '+ element+ ' </label>');
     		if(selected_topics.indexOf(element)!=-1){
     			$('input[value=\''+element+'\']').attr('checked', true);

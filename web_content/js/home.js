@@ -48,8 +48,11 @@ $(document).ready(function () {
 					if (typeof data == 'undefined' || data.length == 0) {
 						// alert("No User Topics")
 						// TODO: Add Model ( pop-up to select topics )
-						gettags();
+						selected_topics = [];
+						$('#tags .close').css('display', 'none');
 						$("#tags").modal('show');
+						gettags();
+						
 					} else {
 						var usertopic = data;
 						for (var i = 0; i < data.length; i++) {
@@ -63,6 +66,32 @@ $(document).ready(function () {
 			}
 		});
 
+	$('#topic-save').click(function(){
+		if(selected_topics == null || selected_topics.length < 3){
+//			$("#error").html('Please select atleast 3 topics');
+			alert('Please select atleast 3 topics');
+		}else {
+			$.post(
+			        'setUserTopics',
+			        {
+			            values: selected_topics+'',
+			            sop: $("#sop").val()
+			        },
+			        function(data,status,request){
+			            if(status=='success'){
+			            	if(request.getResponseHeader('require_auth')=='yes'){
+			            		window.location.replace('index.html')
+			            	}else{
+			            		window.location.replace('home.html')
+			            	}
+			            }else {
+			            	alert('Failed to Add!! Please try again')
+			            }
+			        }
+			    );
+		}
+	});	
+	
 	$('#Logout_button').click(function () {
 		Logout();
 	});
@@ -182,7 +211,7 @@ function LoadVolunteer() {
 			} else if (data.isApplication) {
 				alert("Application Pending")
 			} else {
-				// window.location.replace('volunteer_app.html')
+				 window.location.replace('volunteer_app.html')
 			}
 		}
 	);
