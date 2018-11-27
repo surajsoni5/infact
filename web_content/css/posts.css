@@ -132,6 +132,7 @@ img{
     height: 100%;
 }
 .Mypost-title{
+	width: 100%;
     height: 20%;
     margin: auto;
     font-weight: bold;
@@ -139,9 +140,13 @@ img{
     padding: 10px;
 }
 .Mypost-body{
+	width: 100%;
     height: 60%;
     text-align: center;
     padding: 15px;
+    margin:auto;
+    overflow:hidden;
+    
 }
 .options {
     height: 100%;
@@ -157,10 +162,12 @@ img{
 	 padding: 2%; 
 	display: block;
 	height: 100%;
+	width: 100%;
 	 background-color: ghostwhite; 
 }
 
 .Mypost-main{
+	width: 100%;
     margin: 2%; 
     padding: 2%;
     /* box-shadow: 1vw 1vw lightgray; */

@@ -52,50 +52,44 @@ var ra9  =  `
                   </div>
                 </div>
               </div>
-          </div>
-`
+          </div>`;
 
 
 
+var ap1 = `
+<div class = "row Mypost-row" data-value='`
 
 
-
-
-
-
-
-
-var r1 = ` <div class = "row Mypost-row">
-<div class="col-lg-1"> </div>
-<div class="col-lg-10 Mypost-main">
-<div class="row Mypost-submain" >
-<div class = "row"> `;
-
-var r2 = `
-      <div class="col-lg-5 "> 
-        <div class = " Mypost-image"> `
-            
-var r3=  ` </div>
-      </div>
-      <div class="col-lg-7 "> 
+var ap2 = `' >
+	<div class="row  Mypost-main" >
+	<div class="col-lg-2"> </div>
+	<div class="col-lg-8 Mypost-submain">
+	<div class = "row ">
         <div class=" Mypost-title">`
-         
- var r4 =       ` </div>
-        <div class=" Mypost-body">`;
-              
-var r5 = ` </div> 
-			
-      `;
-var r6 = `</div>
-		</div>
-      <div class="row User-Option-row">
-      	 <button class = "Mybtn Like_Post" type="button" id="Like_Post" > Like </button>
-      	 <button class = "Mybtn Save_Post" type="button" id="Save_Post" > Save </button>
-		 <button onclick="viewFunction(this)" class = "Mybtn View_Post" type="button" id="View_Post" value="small"> View </button>
-		  </div>
-  </div> `
 
-	
+var ap3 =`
+        </div> 
+        
+         <div class=" Mypost-body">`
+
+
+var ap4 =`    </div> 
+        	
+	</div>`
+var ap5 =	`
+     <div class="row User-Option-row">
+      	 <button onclick=accept_vol(this) class = "Mybtn Accept_btn" type="button" id="Accept" > Accept </button>
+      	 <button onclick=reject_vol(this) class = "Mybtn Reject_btn" type="button" id="Reject" > Reject </button>
+		 <button onclick="viewFunction(this)" class = "Mybtn View_Post" type="button" id="View_Post" value="small"> View </button>
+	</div>
+	 </div>
+	 <div class="col-lg-2"> </div>
+      </div>
+      </div>
+
+`;
+
+
 $(document).ready(function () { 
       
 //	LoadVerificationPosts(3);
@@ -120,12 +114,74 @@ $(document).ready(function () {
 	});
 });
 
+
+function accept_vol(but){
+	var parent =  but.parentNode.parentNode;
+	var userid = parent.parentNode.parentNode.attributes[1].nodeValue;
+	console.log(userid);
+}
+
+function viewFunction(but){
+	var parent =  but.parentNode.parentNode;
+	if (but.attributes.value.nodeValue == "small") {
+	parent.children[0].children[1].style.overflow = "visible";
+	but.attributes.value.nodeValue = "large";
+	but.innerHTML = "Collapse";
+	}else{
+		parent.children[0].children[1].style.overflow = "hidden";
+		but.attributes.value.nodeValue = "small";
+		but.innerHTML = "View";
+		$('html, body').animate({ scrollTop: parent.parentNode.parentNode.offsetTop - 100 }, 'slow');
+	}
+	
+}
 function LoadVolunteers(limit){
 	
 }
     
 function LoadApplications(limit){
-	
+	$('#Applications').empty();
+	$.post(
+			'getApplication',
+			{ limit: limit },
+			function (response, status) {
+				if (status == "success" && response.status == true) {
+					console.log(response);
+					var data = response.data;
+					var len = data.length;
+					var user = [];
+					var user_topic = new Object();;
+					var sop = new Object();;
+					for(var i =0;i<len;i++){
+						if(user_topic[data[i].user_id] == undefined){
+							user.push(data[i].user_id);
+							sop[data[i].user_id] = data[i].sop;
+							user_topic[data[i].user_id] =  [data[i].topic_name];
+						}else{
+							user_topic[data[i].user_id].push(data[i].topic_name);
+						}
+						
+						
+					}
+					
+					for(var i =0;i<user.length;i++){
+						var uid = user[i];
+						var ap = ap1 + uid + ap2 + user_topic[uid] + ap3 + sop[uid] + ap4 + ap5;
+						
+					}
+					
+					$("#Applications").append(ap);
+					
+//					console.log(user);
+//					console.log(sop);
+					
+					
+					
+				}
+
+			}
+		);
+
 }
 
 

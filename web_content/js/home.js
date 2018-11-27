@@ -272,6 +272,7 @@ function viewFunction(but) {
 		var image = ParentNode.children[0].children[0];
 		var post_title = ParentNode.children[1].children[0];
 		var post_body = ParentNode.children[1].children[1];
+		post_body.style.overflow = "hidden";
 		//		ParentNode.hidden = true;
 		ParentNode.innerHTML = "";
 		ParentNode.appendChild(image);

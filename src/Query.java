@@ -98,8 +98,10 @@ public class Query {
 //	public static final String ChangePassword_query = "";
 	
 	// Input: limit , Ouput: 
-	public static final String getApplication_query = "select * from applications,application_topics "
-			+ " where applications.post_id = application_topics.post_id limit (?) order by requested_timestamp";
+	public static final String getApplication_query =  
+			"select applications.*, application_topics.topic_name from applications,application_topics " + 
+			"where applications.user_id = application_topics.user_id " + 
+			" group by applications.user_id, application_topics.topic_name  order by applications.requested_time_stamp limit (?)";
 	public static final String GetPosts_query = "select * from posts where post_id in ";
 	
 	// Get Tags
