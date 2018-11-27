@@ -78,8 +78,8 @@ var ap4 =`    </div>
 	</div>`
 var ap5 =	`
      <div class="row User-Option-row">
-      	 <button onclick=accept_vol(this) class = "Mybtn Accept_btn" type="button" id="Accept" > Accept </button>
-      	 <button onclick=reject_vol(this) class = "Mybtn Reject_btn" type="button" id="Reject" > Reject </button>
+      	 <button onclick=accept_reject_vol(this,1) class = "Mybtn Accept_btn" type="button" id="Accept" > Accept </button>
+      	 <button onclick=accept_reject_vol(this,0) class = "Mybtn Reject_btn" type="button" id="Reject" > Reject </button>
 		 <button onclick="viewFunction(this)" class = "Mybtn View_Post" type="button" id="View_Post" value="small"> View </button>
 	</div>
 	 </div>
@@ -115,10 +115,27 @@ $(document).ready(function () {
 });
 
 
-function accept_vol(but){
+function accept_reject_vol(but,accept){
 	var parent =  but.parentNode.parentNode;
+	console.log(parent.parentNode.parentNode)
 	var userid = parent.parentNode.parentNode.attributes[1].nodeValue;
-	console.log(userid);
+	$.post(
+		"AcceptRejectVol",
+		{
+			user_id:userid,
+			accept:accept
+		},
+		function(data,status){
+			if(status=='true'){
+				console.log('aa')
+				console.log(status)
+				if(data.status){
+					console.log('bb')
+					parent.parentNode.parentNode.style.display = "none";//TOdo
+				}else alert("Error !!");
+			}
+		}
+	);
 }
 
 function viewFunction(but){

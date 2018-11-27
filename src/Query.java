@@ -108,6 +108,13 @@ public class Query {
 			" group by applications.user_id, application_topics.topic_name  order by applications.requested_time_stamp limit (?)";
 	public static final String GetPosts_query = "select * from posts where post_id in ";
 	
+	// Application to volunteer
+	public static final String deleteApplication="delete from applications where user_id=?";
+	public static final String addVolunteer_app = "insert into volunteers values (?,?,2,0,0)";
+	public static final String transferTopics =
+			"with deleted as (delete from application_topics where user_id=? returning *)" + 
+			"insert  into volunteer_topics " + 
+			"(select * from deleted)";
 	// Get Tags
 	public	static final String getTags= "select * from topics";
 	
