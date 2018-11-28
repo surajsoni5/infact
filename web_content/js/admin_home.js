@@ -133,15 +133,18 @@ function approve_post(but){
 	console.log(super_parent);
 	var post_id = super_parent.attributes[1].nodeValue;
 	console.log(post_id);
+	
+	
 	$.post(
 			"AdminAcceptPost",
 			{
 				post_id:post_id,
 			},
 			function(data,status){
-				if(status=='true'){
+				console.log(status);
+				if(status=='success' && data.status){
 					console.log("Accepted "+post_id);
-						parent.parentNode.parentNode.style.display = "none";//TOdo
+						super_parent.style.display = "none";//TOdo
 					}else alert("Error !!");
 				}
 		);
@@ -160,10 +163,13 @@ function reject_post(but){
 				post_id:post_id,
 			},
 			function(data,status){
-				if(status=='true'){
+				if(status=='success' && data.status){
 					console.log("Rejected "+post_id);
-						parent.parentNode.parentNode.style.display = "none";//TOdo
-					}else alert("Error !!");
+					console.log(parent.parentNode.parentNode);
+						super_parent.style.display = "none";;//TOdo
+					}else {
+						alert("Error !!");
+					}
 				}
 		);
 	
@@ -173,6 +179,9 @@ function accept_reject_vol(but,accept){
 	var parent =  but.parentNode.parentNode;
 	console.log(parent.parentNode.parentNode)
 	var userid = parent.parentNode.parentNode.attributes[1].nodeValue;
+	
+	console.log(parent.parentNode.parentNode);
+	
 	$.post(
 		"AcceptRejectVol",
 		{
@@ -180,14 +189,12 @@ function accept_reject_vol(but,accept){
 			accept:accept
 		},
 		function(data,status){
-			if(status=='true'){
-				console.log('aa')
-				console.log(status)
-				if(data.status){
-					console.log('bb')
-					parent.parentNode.parentNode.style.display = "none";//TOdo
-				}else alert("Error !!");
-			}
+			if(status=='success' && data.status){	
+			parent.parentNode.parentNode.style.display = "none";
+				parent.parentNode.parentNode.style.display = "none";//TOdo
+				
+			}else alert("Error !!");
+			
 		}
 	);
 }

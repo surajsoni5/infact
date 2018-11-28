@@ -157,13 +157,13 @@ $(document).ready(function () {
 
 	$('#vol-submit').click(function () {
 		var comment = $('#post-comment').val();
-		console.log("aaaa")
+		
 		if (response == null) {
 			alert('Please add Response');
 		} else if (comment == null || comment.length == 0) {
 			alert('Please add Comment');
 		} else {
-			console.log("aaaa")
+			
 			$.post(
 				'AddPostResponse',
 				{
