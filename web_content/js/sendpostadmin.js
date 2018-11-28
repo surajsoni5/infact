@@ -34,7 +34,7 @@ $(document).ready(function () {
 			var file_upload = $("#file-upload")[0].files[0];
 
 
-			console.log("Submitting the Post")
+			console.log("Submitting the Post admin")
 
 
 			var formData = new FormData();
@@ -52,7 +52,7 @@ $(document).ready(function () {
 				processData: false,
 				success: function (data) {
 					//	        	console.log(data);
-					window.location.replace('home.html')
+					window.location.replace('admin_home.html')
 					//	        	window.location = window.location.protocol + '//' + (start+"posts.html");
 					alert("Added Post");
 				}
