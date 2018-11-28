@@ -34,7 +34,7 @@ $(document).ready(function () {
 			var file_upload = $("#file-upload")[0].files[0];
 
 
-			console.log("Submitting the Post")
+			console.log("Submitting the Post admin")
 
 
 			var formData = new FormData();
