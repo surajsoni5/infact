@@ -28,6 +28,7 @@ public class Query {
 	" insert into pending_posts " + 
 	"  select t.id,null,t.time,null,0 from t";
 	
+	public static final String addPostTopics_query = "insert into post_topics values (?,?)";
 	public static final String addUserPost_query = "insert into user_posts values (?,?)"; // user_id postid
 	public static final String addAdminPost_query = "insert into admin_posts values (?,?)"; // adminid postid
 	
@@ -58,13 +59,13 @@ public class Query {
 	/** Admin **/
 	
 	public static final String getAdminPosts_query = 
-			"select DISTINCT posts.post_id,posts.created_timestamp,posts.image_metadata,posts.body,posts.title,posts.author_name "
+			"select DISTINCT posts.post_id,posts.created_timestamp,posts.image_metadata,posts.body,posts.title,posts.author_name,pending_posts.added_timestamp "
 			+ "from posts,pending_posts "
-			+ "where pending_posts.post_id =  posts.post_id "
-			+ " posts.created_timestamp < (?) and"
-			+ " post_topics.topic_name in "
-			+ "(select topic_name from user_topics where user_id = (?) ) "
-			+ "order by posts.created_timestamp limit (?) "; //Expand 
+			+ "where pending_posts.post_id =  posts.post_id and pending_posts.score >= (?) "
+			+ " order by pending_posts.added_timestamp limit (?) "; //Expand 
+	
+	public static final String getResponsesofPost_query = "select * from responses where post_id = (?) order by response_timestamp  limit (?)";
+	
 	public static final String AdminInfo_query = "select * from admins where admin_id = (?)";
 	public static final String addAdmin_query = "insert into admins values (?,?)"; // (name, password)
 	
@@ -98,7 +99,7 @@ public class Query {
 			+ "insert into published_posts "
 			+ "( select post_id , now() from p_id );";
 	
-	public static final String getResponsesofPost_query = "select * from responses where post_id = (?) limit (?) order by response_timestamp"; 
+//	public static final String getResponsesofPost_query = "select * from responses where post_id = (?) limit (?) order by response_timestamp"; 
 	public static final String getResponsesofVolunteer_query = "select * from responses where user_id = (?) limit (?) order by response_timestamp";
 	
 	public static final String getRejectedPosts_query = 

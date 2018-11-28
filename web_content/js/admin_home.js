@@ -96,7 +96,8 @@ $(document).ready(function () {
 	$('#Home_button').click(function () {
 		$('#Applications').hide();
 		$('#VerificationPosts').show();
-		LoadVerificationPosts(limit);
+//		TODO: Hardcoded limit
+		LoadVerificationPosts(5);
 	});
 	
 	$('#Applications-btn').click(function(){
@@ -112,6 +113,8 @@ $(document).ready(function () {
 	$('#Logout-btn').click(function(){
 			Logout();
 	});
+//	TODO: Hardcoded limit
+	LoadVerificationPosts(5);
 });
 
 
@@ -216,37 +219,61 @@ function Logout() {
 }
 
 function LoadVerificationPosts(limit){
-      $("#UserPosts").empty();
-
-	var userTopics = JSON.parse(Cookies.get('user_topics'));
+      $("#VerificationPosts").empty();
 
 	var postdata = {
 		'limit': limit,
 		//    	'user_topics': JSON.stringify(userTopics)
 	};
 	console.log(postdata);
-	console.log("Load " + userTopics);
-	$.post(
-		'getPosts',
-		postdata
-		,
-		function (response, status) {
-			if (status == "success" && response.status == true) {
-				console.log(response);
-				var data = response.data;
-				var len = data.length;
-				for (var i = 0; i < len; i++) {
-					var r = ra1 + " 1 " + ra2 + " 2 " + ra3 + " 3 "+ ra4 +
-						ra5 +
-						` <img src= "` + `getPostImage?post_id=` + data[i].post_id + `" id="image" alt=" ` + " Image" + ` "> ` +
-						ra6 + data[i].title + ra7 + data[i].body + ra8 + ra9;
-					$("#UserPosts").append(r);
-				}
-			}
-
-		}
-	);
 	
+	$.post(
+		'getVerificationPosts',
+		{ limit: limit }
+		,
+		function (response_post, status) {
+			if (status == "success" && response_post.status == true) {
+				console.log(response_post);
+				data = response_post.data;
+				var len = data.length;
+				for(var i = 0;i<len;i++){
+					console.log()
+				$.post(
+						'getResponses',
+						{ post_id: data[i].post_id,
+							limit: limit}
+						,
+						function (response_res, status) {
+							if (status == "success" && response_res.status == true) {
+								console.log(response_res);
+								var correct = 0;
+								var incorrect = 0;
+								
+								var data1 = response_res.data;
+								var len1 = data1.length;
+								for(var i = 0;i<len1;i++){
+									if(data1[i].verify == true){
+										correct++;
+									}else{
+										incorrect++;
+									}
+								}
+								
+								
+									var r = ra1 + len1 + ra2 + correct + ra3 + incorrect + ra4 +
+										ra5 +
+										` <img src= "` + `getPostImage?post_id=` + data[i].post_id + `" id="image" alt=" ` + " Image" + ` "> ` +
+										ra6 + data[i].title + ra7 + data[i].body + ra8 + ra9;
+									$("#VerificationPosts").append(r);
+								
+								
+							}
+
+						}
+					);
+				}
+				}
+			});
 	
 
 }

@@ -1,6 +1,8 @@
 
 
 import java.io.IOException;
+import java.sql.Timestamp;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,16 +41,22 @@ public class getResponses extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		int id = -1;
-		if(session.getAttribute("userid") == null) {
+		if(session.getAttribute("adminid") == null) {
 			response.sendRedirect("index.html");
 		}else {
-			id = (int) session.getAttribute("userid");
+			id = (int) session.getAttribute("adminid");
 		}
-		
+		int post_id =(int) Integer.parseInt(request.getParameter("post_id"));
 		int limit = (int) Integer.parseInt(request.getParameter("limit"));
-		limit  = (Config.verificationlimit>limit)? limit:Config.verificationlimit;
+		limit  = (Config.Responsethreshold>limit)? limit:Config.Responsethreshold;
 		
+		String json = DbHelper.executeQueryJson(Query.getResponsesofPost_query,
+				new DbHelper.ParamType[] {DbHelper.ParamType.INT,DbHelper.ParamType.INT},
+				new Object[] {post_id,limit});
 		
+		System.out.println(json);
+		response.getWriter().print(json);
+		response.setContentType("application/json;charset=UTF-8");
 		
 	}
 

@@ -9,7 +9,8 @@ public class Config {
 	public static final int postlimit = 10;
 	public static final int applicationlimit = 10;
 	public static final int verificationlimit = 10;
-	public static final int threshold = 5;
+	public static final int Responsethreshold = 10;
+	public static final int threshold = 0;
 }
 
 /*

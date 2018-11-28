@@ -48,12 +48,12 @@ public class getPostImage extends HttpServlet {
 		boolean isUser = true;
 		int id = -1;
 		
-		if(session.getAttribute("userid") == null) {
-			response.sendRedirect("index.html");
-		}else {
-			id = (int) session.getAttribute("userid");
+		if(session.getAttribute("userid") == null ) {
+			if(session.getAttribute("adminid") == null) {
+				 response.sendRedirect("index.html");
+			}
+			
 		}
-		
 		int postid = Integer.parseInt(request.getParameter("post_id"));
 		System.out.println("Getting post Image of " + postid);
 		try (Connection conn = DriverManager.getConnection(Config.url, Config.user, Config.password))
@@ -62,7 +62,7 @@ public class getPostImage extends HttpServlet {
             try(PreparedStatement stmt = conn.prepareStatement(Query.getPostImage_query)) {
             	stmt.setInt(1, postid);
                 ResultSet rs = stmt.executeQuery();
-                
+                 
                 if(rs != null) {
                 	if(rs.next()) {
                 		System.out.println("Got the Image");

@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -26,6 +30,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * Servlet implementation class addPost
@@ -127,17 +133,75 @@ public class addPost extends HttpServlet {
 		
 		
 		 // Image body title author_name
-		String json = "";
-		if(img_metadata == null) {
-			json =  DbHelper.executeUpdateJson(Query.addPost_query, 
-					new DbHelper.ParamType[] {DbHelper.ParamType.STRING,DbHelper.ParamType.STRING, DbHelper.ParamType.STRING,DbHelper.ParamType.STRING,DbHelper.ParamType.INT}, 
-					new Object[] {"null","null".toLowerCase(),body,title,id});
-		}else {
-		json =  DbHelper.executeUpdateJson(Query.addPost_query, 
-				new DbHelper.ParamType[] {DbHelper.ParamType.BYTEA,DbHelper.ParamType.STRING, DbHelper.ParamType.STRING,DbHelper.ParamType.STRING,DbHelper.ParamType.INT}, 
-				new Object[] {bytea,img_metadata.toLowerCase(),body,title,id});
-		}
-		response.getWriter().print(json);
+		String json = null;
+		boolean success = false;
+    	try (Connection conn = DriverManager.getConnection(Config.url, Config.user, Config.password))
+        {
+            conn.setAutoCommit(false);
+            try(PreparedStatement stmt = conn.prepareStatement(Query.addPost_query);
+            		PreparedStatement stmt1 = conn.prepareStatement(Query.addPostTopics_query);	
+            		) {
+
+            	if(img_metadata == null) {
+    				stmt.setString(1,null);
+    				stmt.setString(2,null);
+    				stmt.setString(3, body);
+    				stmt.setString(4, title);
+    				stmt.setInt(5, id);
+
+        		}else {
+        			
+        			
+    				stmt.setBinaryStream(1,(InputStream) bytea.get(0),(Integer)bytea.get(1));
+    				stmt.setString(2,img_metadata.toLowerCase());
+    				stmt.setString(3, body);
+    				stmt.setString(4, title);
+    				stmt.setInt(5, id);
+    			
+        		}
+            	
+                stmt.execute();
+                ResultSet rs = stmt.getResultSet();
+                if(rs.next()) {
+                	int post_id = rs.getInt(1);
+                	
+                	String [] tags=request.getParameter("values").split(",");
+            		System.out.println(tags.toString());
+            		
+            		
+            		for(int i = 0;i < tags.length;i++) {
+            			stmt1.setInt(1,post_id);
+            			stmt1.setString(2,tags[i]);
+            			
+            			stmt1.addBatch();
+            		}
+            		
+            		stmt.executeBatch();
+                	
+                    conn.commit();
+                    success = true;
+                    
+                }
+               
+            }
+            catch(Exception ex)
+            {
+                conn.rollback();
+                throw ex;
+            }
+            finally{
+                conn.setAutoCommit(true);
+            }
+        } catch (Exception e) {
+        	response.getWriter().print(DbHelper.errorJson(e.getMessage()).toString());
+        	response.setContentType("application/json;charset=UTF-8");
+        }
+    	
+    	if(success) {
+    		DbHelper.okJson().toString();
+    	}else {
+    		DbHelper.errorJson("Error in Adding").toString();
+    	}
 		response.setContentType("application/json;charset=UTF-8");
 		
 //		Map<String, Object> jsonRes = mapper.readValue(json,
