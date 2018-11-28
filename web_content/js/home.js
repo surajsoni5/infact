@@ -215,8 +215,8 @@ function LoadVolunteer() {
 						$('#comment_list').append(
 							'<li class="list-group-item" >' +
 							'<div>' + element.comment + '</div>' +
-							'<button  onclick="like(\'' + element.response_id + '\',this )"> <i  class="material-icons " style="font-size:36px;" >cloud</i> </button>' +
-							'<button  onclick="unlike(\'' + element.response_id + '\',this)"> <i class="material-icons " style="font-size:36px;" >cloud</i> </button>' +
+							'<button  onclick="like(\'' + element.response_id + '\',this )"> <i  class="material-icons " style="font-size:36px;" >thumb_up</i> </button>' +
+							'<button  onclick="unlike(\'' + element.response_id + '\',this)"> <i class="material-icons " style="font-size:36px;" >thumb_down</i> </button>' +
 							'</li>'
 						);
 						// $('#comment_list').append('<li class="list-group-item">' + element.comment + ' <i></i><span>1</span><i></i>    </li>')
