@@ -5,13 +5,7 @@ import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.File;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -22,24 +16,22 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * Servlet implementation class addPost
+ * Servlet implementation class addPostAdmin
  */
-@WebServlet("/addPost")
+@WebServlet("/addPostAdmin")
 @MultipartConfig
-public class addPost extends HttpServlet {
+public class addPostAdmin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public static ObjectMapper mapper = new ObjectMapper();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public addPost() {
+    public addPostAdmin() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -48,14 +40,6 @@ public class addPost extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-//		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		boolean isUser = true;
@@ -129,47 +113,24 @@ public class addPost extends HttpServlet {
 		 // Image body title author_name
 		String json = "";
 		if(img_metadata == null) {
-			json =  DbHelper.executeUpdateJson(Query.addPost_query, 
-					new DbHelper.ParamType[] {DbHelper.ParamType.STRING,DbHelper.ParamType.STRING, DbHelper.ParamType.STRING,DbHelper.ParamType.STRING,DbHelper.ParamType.INT,DbHelper.ParamType.INT}, 
-					new Object[] {"null","null".toLowerCase(),body,title,id,id});
+			json =  DbHelper.executeUpdateJson(Query.addPostVol_query, 
+					new DbHelper.ParamType[] {DbHelper.ParamType.STRING,DbHelper.ParamType.STRING, DbHelper.ParamType.STRING,DbHelper.ParamType.STRING,DbHelper.ParamType.INT}, 
+					new Object[] {"null","null".toLowerCase(),body,title,id});
 		}else {
-		json =  DbHelper.executeUpdateJson(Query.addPost_query, 
-				new DbHelper.ParamType[] {DbHelper.ParamType.BYTEA,DbHelper.ParamType.STRING, DbHelper.ParamType.STRING,DbHelper.ParamType.STRING,DbHelper.ParamType.INT,DbHelper.ParamType.INT}, 
-				new Object[] {bytea,img_metadata.toLowerCase(),body,title,id,id});
+		json =  DbHelper.executeUpdateJson(Query.addPostVol_query, 
+				new DbHelper.ParamType[] {DbHelper.ParamType.BYTEA,DbHelper.ParamType.STRING, DbHelper.ParamType.STRING,DbHelper.ParamType.STRING,DbHelper.ParamType.INT}, 
+				new Object[] {bytea,img_metadata.toLowerCase(),body,title,id});
 		}
 		response.getWriter().print(json);
 		response.setContentType("application/json;charset=UTF-8");
-		
-//		Map<String, Object> jsonRes = mapper.readValue(json,
-//			    new TypeReference<Map<String,Object>>(){});
-//		
-//		
-//		response.setContentType("application/json;charset=UTF-8");
-//		
-//		System.out.println("Add Post: List " + ((List) jsonRes.get("data")).get(0));
-//		
-//		 int post_id = (int) ((LinkedHashMap) (((List) jsonRes.get("data")).get(0)) ).get("post_id");
-//		 boolean status = (boolean) jsonRes.get("status");
-//		 
-//		 if(!status) {
-//				response.getWriter().print(json); 
-//		 }else {
-//			 System.out.println("Add Post: Post ID " + post_id);
-//			 
-//			 if(isUser) {
-//				 json =  DbHelper.executeUpdateJson(Query.addUserPost_query, 
-//							new DbHelper.ParamType[] {DbHelper.ParamType.INT,DbHelper.ParamType.INT}, 
-//							new Object[] {id,post_id});
-//			 }else {
-//				 json =  DbHelper.executeUpdateJson(Query.addAdminPost_query, 
-//						 	new DbHelper.ParamType[] {DbHelper.ParamType.INT,DbHelper.ParamType.INT}, 
-//							new Object[] {id,post_id});
-//			 }
-//			 
-//			 response.getWriter().print(json);
-//			 response.setContentType("application/json;charset=UTF-8");
-//		 }
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }
-
