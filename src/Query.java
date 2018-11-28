@@ -23,10 +23,18 @@ public class Query {
 	
 	/** Adding Posts**/
 	public static final String getPostID_query = "select * from posts where post_id = (?)"; 
-	public static final String addPost_query = 
-	" with t(id,time) as (insert into posts values (DEFAULT,now(),?,?,?,?,(select name from users where user_id = ?)) returning post_id,created_timestamp) " + 
-	" insert into pending_posts " + 
-	"  select t.id,null,t.time,null,0 from t";
+	public static final String addPost_query = // Added one more param
+	" with t(id,time) as (insert into posts values (DEFAULT,now(),?,?,?,?,(select name from users where user_id = ?)) returning post_id,created_timestamp), " + 
+	" k as (insert into pending_posts select t.id,null,t.time,null,0 from t returning *)"
+	+ "insert into user_posts select ?,id from t ";
+//	+ "returning user_posts.post_id";
+	
+	public static final String addPostVol_query = 
+			" with t(id,time) as (insert into posts values (DEFAULT,now(),?,?,?,?,'admin post') returning post_id,created_timestamp), " + 
+			"k as  (insert into pending_posts  select t.id,null,t.time,null,0 from t returning *) " 
+			+ "insert into admin_posts select ?,id from t";
+//			+ "returning admin_posts.post_id";
+	
 	
 	public static final String addPostTopics_query = "insert into post_topics values (?,?)";
 	public static final String addUserPost_query = "insert into user_posts values (?,?)"; // user_id postid

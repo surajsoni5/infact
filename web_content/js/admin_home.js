@@ -95,6 +95,7 @@ $(document).ready(function () {
 //	LoadVerificationPosts(3);
 	$('#Home_button').click(function () {
 		$('#Applications').hide();
+		$('#User_Editor').hide();
 		$('#VerificationPosts').show();
 //		TODO: Hardcoded limit
 		LoadVerificationPosts(5);
@@ -102,11 +103,16 @@ $(document).ready(function () {
 	
 	$('#Applications-btn').click(function(){
 		$('#Applications').show();
+		$('#User_Editor').hide();
 		$('#VerificationPosts').hide();
 //		TODO: Hardcoded limit
 		LoadApplications(5);
 	});
-	
+	$('#Editor_button').click(function(){
+		$('#Applications').hide();
+		$('#VerificationPosts').hide();
+		$('#User_Editor').show();
+	});
 	$('#Volunteers-btn').click(function(){
 			
 		});

@@ -198,9 +198,9 @@ public class addPost extends HttpServlet {
         }
     	
     	if(success) {
-    		DbHelper.okJson().toString();
+    		response.getWriter().print(DbHelper.okJson().toString());
     	}else {
-    		DbHelper.errorJson("Error in Adding").toString();
+    		response.getWriter().print(DbHelper.errorJson("Error in Adding").toString());
     	}
 		response.setContentType("application/json;charset=UTF-8");
 		
