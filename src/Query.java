@@ -72,6 +72,16 @@ public class Query {
 			+ "where pending_posts.post_id =  posts.post_id and pending_posts.score >= (?) "
 			+ " order by pending_posts.added_timestamp limit (?) "; //Expand 
 	
+	public static final String addApprovedposts_query = "with p_id(post_id) as "
+			+ " ( delete from pending_posts where post_id = (?) returning post_id ) "
+			+ " insert into published_posts "
+			+ " ( select post_id , now() from p_id );";
+	
+	public static final String addRejectedposts_query = "with p_id(post_id) as "
+			+ " ( delete from pending_posts where post_id = (?) returning post_id ) "
+			+ " insert into rejected_posts "
+			+ " ( select post_id , user_posts.user_id from p_id,user_posts where user_posts.post_id = p_id );";
+	
 	public static final String getResponsesofPost_query = "select * from responses where post_id = (?) order by response_timestamp  limit (?)";
 	
 	public static final String AdminInfo_query = "select * from admins where admin_id = (?)";
@@ -102,10 +112,7 @@ public class Query {
 	
 	public static final String removePendingpost_query = "delete from pending_posts where post_id = (?)";
 	
-	public static final String addApprovedposts_query = "with p_id as "
-			+ "( delete from pending_posts where post_id = (?) returning a ) "
-			+ "insert into published_posts "
-			+ "( select post_id , now() from p_id );";
+	
 	
 //	public static final String getResponsesofPost_query = "select * from responses where post_id = (?) limit (?) order by response_timestamp"; 
 	public static final String getResponsesofVolunteer_query = "select * from responses where user_id = (?) limit (?) order by response_timestamp";

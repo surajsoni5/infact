@@ -1,5 +1,7 @@
-var ra1 =`
-          <div class = "row Mypost-row" data-value="1">
+var ra0 =`
+          <div class = "row Mypost-row" data-value="`;
+
+var ra1	=`">
           <div class="col-lg-1"> </div>
           <div class="col-lg-11 Mypost-main"> 
             <div class="row Mypost-submain" >
@@ -45,10 +47,10 @@ var ra9  =  `
                 </div>
               </div>
                   <div class="row User-Option-row" >
-                        <button onclick="approve_post()" class = "Mybtn Accept_btn" type="button"  > Approve </button>
-                        <button onclick="reject_post()" class = "Mybtn Reject_btn" type="button" > Reject </button>  
-                  		<button onclick="view_responses_post()" class = "Mybtn View_responses_btn" type="button" > View Responses </button>
-                  		<button onclick="view_post()" class = "Mybtn View_btn" type="button" > View Post</button>
+                        <button onclick=approve_post(this) class = "Mybtn Accept_btn" type="button"  > Approve </button>
+                        <button onclick=reject_post(this) class = "Mybtn Reject_btn" type="button" > Reject </button>  
+                  		<button onclick=view_responses_post(this) class = "Mybtn View_responses_btn" type="button" > View Responses </button>
+                  		<button onclick=view_post(this) class = "Mybtn View_btn" type="button" > View Post</button>
                   </div>
                 </div>
               </div>
@@ -121,8 +123,51 @@ $(document).ready(function () {
 	});
 //	TODO: Hardcoded limit
 	LoadVerificationPosts(5);
+	
+	
 });
 
+
+function approve_post(but){
+	var super_parent = but.parentNode.parentNode.parentNode.parentNode;
+	console.log(super_parent);
+	var post_id = super_parent.attributes[1].nodeValue;
+	console.log(post_id);
+	$.post(
+			"AdminAcceptPost",
+			{
+				post_id:post_id,
+			},
+			function(data,status){
+				if(status=='true'){
+					console.log("Accepted "+post_id);
+						parent.parentNode.parentNode.style.display = "none";//TOdo
+					}else alert("Error !!");
+				}
+		);
+	
+}
+
+
+function reject_post(but){
+	var super_parent = but.parentNode.parentNode.parentNode.parentNode;
+	console.log(super_parent);
+	var post_id = super_parent.attributes[1].nodeValue;
+	console.log(post_id);
+	$.post(
+			"AdminRejectPost",
+			{
+				post_id:post_id,
+			},
+			function(data,status){
+				if(status=='true'){
+					console.log("Rejected "+post_id);
+						parent.parentNode.parentNode.style.display = "none";//TOdo
+					}else alert("Error !!");
+				}
+		);
+	
+}
 
 function accept_reject_vol(but,accept){
 	var parent =  but.parentNode.parentNode;
@@ -266,7 +311,7 @@ function LoadVerificationPosts(limit){
 								}
 								
 								
-									var r = ra1 + len1 + ra2 + correct + ra3 + incorrect + ra4 +
+									var r = ra0 + data[i].post_id + ra1 + len1 + ra2 + correct + ra3 + incorrect + ra4 +
 										ra5 +
 										` <img src= "` + `getPostImage?post_id=` + data[i].post_id + `" id="image" alt=" ` + " Image" + ` "> ` +
 										ra6 + data[i].title + ra7 + data[i].body + ra8 + ra9;
