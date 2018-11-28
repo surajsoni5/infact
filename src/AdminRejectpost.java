@@ -46,7 +46,7 @@ public class AdminRejectpost extends HttpServlet {
 		}
 	
 		int post_id = (int) Integer.parseInt(request.getParameter("post_id"));
-		String json = DbHelper.executeQueryJson(Query.addRejectedposts_query, 
+		String json = DbHelper.executeUpdateJson(Query.addRejectedposts_query, 
 				new DbHelper.ParamType[] {DbHelper.ParamType.INT}, 
 				new Integer[] {post_id});
 		response.getWriter().print(json);

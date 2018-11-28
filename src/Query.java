@@ -49,7 +49,7 @@ public class Query {
 			+ " post_topics.topic_name in "
 			+ "(select topic_name from user_topics where user_id = (?) ) "
 			+ "order by posts.created_timestamp limit (?) "; //Expand 
-	public static final String getPostImage_query = "select image from posts where post_id = (?)";
+	public static final String getPostImage_query = "select image,image_metadata from posts where post_id = (?)";
 	/** User Specific **/
 	public static final String UserInfo_query = "select * from users where user_id = (?)";
 	public static final String UserSavedPosts_query = "select post_id from user_post_info where user_id = (?) and saved = TRUE";

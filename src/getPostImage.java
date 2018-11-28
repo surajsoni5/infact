@@ -67,7 +67,7 @@ public class getPostImage extends HttpServlet {
                 	if(rs.next()) {
                 		System.out.println("Got the Image");
                 		byte[] content = rs.getBytes("image");
-                		response.setContentType("image/jpg");
+                		response.setContentType(rs.getString(2));
                 		response.setContentLength(content.length);
                         response.getOutputStream().write(content);
                 	}

@@ -25,9 +25,9 @@ $(document).ready(function () {
 
 
 	$('#post-topic-save').click(function () {
-		if (selected_topics == null || selected_topics.length < 3) {
+		if (selected_topics == null || selected_topics.length < 1) {
 			//			$("#error").html('Please select atleast 3 topics');
-			alert('Please select atleast 3 topics');
+			alert('Please select atleast 1 topic');
 		} else {
 			var post_title = $("#post-title").val();
 			var post_body = $("#post-body").val();
