@@ -29,9 +29,9 @@ function gettags() {
 
 
 function loadlist(data) {
-	$('#tags_list').empty();
+	$('.tags_list').empty();
 	$.each(topics, function (index, element) {
-		$('#tags_list').prepend(' <label><input type="checkbox" name="tag_check" value="' + element + '" onchange = addcheck(this.value) /> ' + element + ' </label>');
+		$('.tags_list').prepend(' <label><input type="checkbox" name="tag_check" value="' + element + '" onchange = addcheck(this.value) /> ' + element + ' </label>');
 
 	});
 }
@@ -43,10 +43,10 @@ function addcheck(value) {
 }
 function myFunction() {
 	console.log($("#searchbox").val())
-	$('#tags_list').empty()
+	$('.tags_list').empty()
 	$.each(topics, function (index, element) {
 		if (element.toLowerCase().match("^" + $("#searchbox").val().toLowerCase())) {
-			$('#tags_list').prepend(' <label><input type="checkbox" name="tag_check" value=' + element + ' onchange = addcheck(this.value) /> ' + element + ' </label>');
+			$('.tags_list').prepend(' <label><input type="checkbox" name="tag_check" value=' + element + ' onchange = addcheck(this.value) /> ' + element + ' </label>');
 			if (selected_topics.indexOf(element) != -1) {
 				$('input[value=\'' + element + '\']').attr('checked', true);
 			}

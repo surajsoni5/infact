@@ -141,42 +141,38 @@ public class addPost extends HttpServlet {
             try(PreparedStatement stmt = conn.prepareStatement(Query.addPost_query);
             		PreparedStatement stmt1 = conn.prepareStatement(Query.addPostTopics_query);	
             		) {
-
             	if(img_metadata == null) {
-    				stmt.setString(1,null);
+    				stmt.setBinaryStream(1,null);
     				stmt.setString(2,null);
     				stmt.setString(3, body);
     				stmt.setString(4, title);
     				stmt.setInt(5, id);
+    				stmt.setInt(6, id);
 
         		}else {
-        			
-        			
     				stmt.setBinaryStream(1,(InputStream) bytea.get(0),(Integer)bytea.get(1));
     				stmt.setString(2,img_metadata.toLowerCase());
     				stmt.setString(3, body);
     				stmt.setString(4, title);
     				stmt.setInt(5, id);
-    			
+    				stmt.setInt(6, id);
         		}
             	
                 stmt.execute();
                 ResultSet rs = stmt.getResultSet();
                 if(rs.next()) {
                 	int post_id = rs.getInt(1);
-                	
                 	String [] tags=request.getParameter("values").split(",");
             		System.out.println(tags.toString());
             		
-            		
             		for(int i = 0;i < tags.length;i++) {
+            		
             			stmt1.setInt(1,post_id);
             			stmt1.setString(2,tags[i]);
-            			
             			stmt1.addBatch();
             		}
             		
-            		stmt.executeBatch();
+            		stmt1.executeBatch();
                 	
                     conn.commit();
                     success = true;

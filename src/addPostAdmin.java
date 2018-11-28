@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,20 +48,11 @@ public class addPostAdmin extends HttpServlet {
 		HttpSession session = request.getSession();
 		boolean isUser = true;
 		int id = -1;
-		
-		if(session.getAttribute("userid") == null) {
-			isUser = false; //not logged in
 			if(session.getAttribute("adminid") == null) { //not logged in
 				response.sendRedirect("index.html");
 			}else { 
 				id = (int) session.getAttribute("adminid");
 			}
-		}else {
-			id = (int) session.getAttribute("userid");
-		}
-		
-		
-		
 		String img_metadata = null;
 		List<Object> bytea = new ArrayList<>();
 
@@ -111,17 +106,69 @@ public class addPostAdmin extends HttpServlet {
 		
 		
 		 // Image body title author_name
-		String json = "";
-		if(img_metadata == null) {
-			json =  DbHelper.executeUpdateJson(Query.addPostVol_query, 
-					new DbHelper.ParamType[] {DbHelper.ParamType.STRING,DbHelper.ParamType.STRING, DbHelper.ParamType.STRING,DbHelper.ParamType.STRING,DbHelper.ParamType.INT}, 
-					new Object[] {"null","null".toLowerCase(),body,title,id});
-		}else {
-		json =  DbHelper.executeUpdateJson(Query.addPostVol_query, 
-				new DbHelper.ParamType[] {DbHelper.ParamType.BYTEA,DbHelper.ParamType.STRING, DbHelper.ParamType.STRING,DbHelper.ParamType.STRING,DbHelper.ParamType.INT}, 
-				new Object[] {bytea,img_metadata.toLowerCase(),body,title,id});
-		}
-		response.getWriter().print(json);
+		String json = null;
+		boolean success = false;
+    	try (Connection conn = DriverManager.getConnection(Config.url, Config.user, Config.password))
+        {
+            conn.setAutoCommit(false);
+            try(PreparedStatement stmt = conn.prepareStatement(Query.addPostVol_query);
+            		PreparedStatement stmt1 = conn.prepareStatement(Query.addPostTopics_query);	
+            		) {
+            	if(img_metadata == null) {
+    				stmt.setBinaryStream(1,null);
+    				stmt.setString(2,null);
+    				stmt.setString(3, body);
+    				stmt.setString(4, title);
+    				stmt.setInt(5, id);
+
+        		}else {
+    				stmt.setBinaryStream(1,(InputStream) bytea.get(0),(Integer)bytea.get(1));
+    				stmt.setString(2,img_metadata.toLowerCase());
+    				stmt.setString(3, body);
+    				stmt.setString(4, title);
+    				stmt.setInt(5, id);
+        		}
+            	
+                stmt.execute();
+                ResultSet rs = stmt.getResultSet();
+                if(rs.next()) {
+                	int post_id = rs.getInt(1);
+                	System.out.println(post_id);
+                	String [] tags=request.getParameter("values").split(",");
+            		System.out.println(tags.toString());
+            		
+            		for(int i = 0;i < tags.length;i++) {
+            			stmt1.setInt(1,post_id);
+            			stmt1.setString(2,tags[i]);
+            			stmt1.addBatch();
+            		}
+            		
+            		stmt1.executeBatch();
+                	
+                    conn.commit();
+                    success = true;
+                    
+                }
+               
+            }
+            catch(Exception ex)
+            {
+                conn.rollback();
+                throw ex;
+            }
+            finally{
+                conn.setAutoCommit(true);
+            }
+        } catch (Exception e) {
+        	response.getWriter().print(DbHelper.errorJson(e.getMessage()).toString());
+        	response.setContentType("application/json;charset=UTF-8");
+        }
+    	
+    	if(success) {
+    		response.getWriter().print(DbHelper.okJson().toString());
+    	}else {
+    		response.getWriter().print(DbHelper.errorJson("Error in Adding").toString());
+    	}
 		response.setContentType("application/json;charset=UTF-8");
 	}
 
