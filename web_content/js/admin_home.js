@@ -49,8 +49,8 @@ var ra9  =  `
                   <div class="row User-Option-row" >
                         <button onclick=approve_post(this) class = "Mybtn Accept_btn" type="button"  > Approve </button>
                         <button onclick=reject_post(this) class = "Mybtn Reject_btn" type="button" > Reject </button>  
-                  		<button onclick=view_responses_post(this) class = "Mybtn View_responses_btn" type="button" > View Responses </button>
-                  		<button onclick=view_post(this) class = "Mybtn View_btn" type="button" > View Post</button>
+                  		<button onclick=view_responses_post(this,10) class = "Mybtn View_responses_btn" type="button" > View Responses </button>
+                  		<button onclick=view_post(this) class = "Mybtn View_btn" type="button" value="small"> View Post</button>
                   </div>
                 </div>
               </div>
@@ -158,7 +158,7 @@ function reject_post(but){
 	var post_id = super_parent.attributes[1].nodeValue;
 	console.log(post_id);
 	$.post(
-			"AdminRejectPost",
+			"AdminRejectpost",
 			{
 				post_id:post_id,
 			},
@@ -191,7 +191,7 @@ function accept_reject_vol(but,accept){
 		function(data,status){
 			if(status=='success' && data.status){	
 			parent.parentNode.parentNode.style.display = "none";
-				parent.parentNode.parentNode.style.display = "none";//TOdo
+				
 				
 			}else alert("Error !!");
 			
@@ -199,18 +199,111 @@ function accept_reject_vol(but,accept){
 	);
 }
 
+function view_responses_post(but,limit){
+	var super_parent = but.parentNode.parentNode.parentNode.parentNode;
+	var post_id = super_parent.attributes[1].nodeValue;
+//	responses_comments
+	$('#responses_comment_list').empty()
+	$("#responses_comments").modal('show');
+	$.post(
+		"getResponses",
+		{
+			post_id:post_id,
+			limit:limit
+		},
+		function(data,status){
+			if(status=='success' && data.status){	
+				
+				$.each(data.data, function (index, element) {
+					console.log(element);
+					console.log(element.response_id);
+					
+					$('#responses_comment_list').append(
+						'<li class="list-group-item" >' +
+						'<div>' + element.comment + '</div>' +
+//						'<button  onclick="like(\'' + element + '\',this )"> <i  class="material-icons " style="font-size:36px;" >cloud</i> </button>' +
+//						'<button  onclick="unlike(\'' + element.response_id + '\',this)"> <i class="material-icons " style="font-size:36px;" >cloud</i> </button>' +
+						'</li>'
+					);
+					// $('#comment_list').append('<li class="list-group-item">' + element.comment + ' <i></i><span>1</span><i></i>    </li>')
+				});	
+				
+			}else alert("Error !!");
+			
+		}
+	);
+	
+	
+	
+}
+
 function viewFunction(but){
+	console.log(but);
 	var parent =  but.parentNode.parentNode;
-	if (but.attributes.value.nodeValue == "small") {
+	if (but.attributes[1].value.nodeValue == "small") {
 	parent.children[0].children[1].style.overflow = "visible";
-	but.attributes.value.nodeValue = "large";
+	but.attributes[1].value.nodeValue = "large";
 	but.innerHTML = "Collapse";
 	}else{
 		parent.children[0].children[1].style.overflow = "hidden";
-		but.attributes.value.nodeValue = "small";
+		but.attributes[1].value.nodeValue = "small";
 		but.innerHTML = "View";
 		$('html, body').animate({ scrollTop: parent.parentNode.parentNode.offsetTop - 100 }, 'slow');
 	}
+}
+
+function view_post(but){
+	
+	console.log("F: viewing post");
+	//	but.parent.clear();
+	console.log(but.attributes.value.nodeValue);
+	
+	if (but.attributes.value.nodeValue == "small") {
+		console.log("Expanding");
+		var ParentNode = but.parentNode.parentNode.children[1];
+		
+		
+		var image = ParentNode.children[0].children[0];
+		var post_title = ParentNode.children[1].children[0];
+		var post_body = ParentNode.children[1].children[1];
+		
+
+//		console.log(ParentNode);
+//		console.log(image);
+//		console.log(post_title);
+//		console.log(post_body);
+//		
+		post_body.style.overflow = "hidden";
+		//		ParentNode.hidden = true;
+		ParentNode.innerHTML = "";
+		ParentNode.appendChild(image);
+		ParentNode.appendChild(post_title);
+		ParentNode.appendChild(post_body);
+		ParentNode.style.display = "block";
+		but.attributes.value.nodeValue = "large";
+		but.innerHTML = "Collapse";
+
+
+				
+		//	
+	} else {
+		var ParentNode = but.parentNode.parentNode.children[1];
+		ParentNode.style.display = "flex";
+		var image = ParentNode.children[0];
+		var post_title = ParentNode.children[1];
+		var post_body = ParentNode.children[2];
+		console.log(image.innerHTML);
+		ParentNode.innerHTML =
+			ra5 + image.innerHTML +
+			ra6 + post_title.innerHTML + ra7 + post_body.innerHTML + ra8;
+		console.log(ParentNode.parentNode);
+		$('html, body').animate({ scrollTop: ParentNode.parentNode.parentNode.offsetTop - 100 }, 'slow');
+
+		but.attributes.value.nodeValue = "small";
+		but.innerHTML = "View";
+	}
+	
+	
 	
 }
 function LoadVolunteers(limit){
@@ -294,30 +387,32 @@ function LoadVerificationPosts(limit){
 				console.log(response_post);
 				data = response_post.data;
 				var len = data.length;
-				for(var i = 0;i<len;i++){
-					console.log()
+				var i =0;
+				console.log(i);
+				for( i= 0;i<len;i++){
 				$.post(
 						'getResponses',
-						{ post_id: data[i].post_id,
+						{  post_id: data[i].post_id,
 							limit: limit}
 						,
 						function (response_res, status) {
 							if (status == "success" && response_res.status == true) {
 								console.log(response_res);
+								console.log(i);
+								i = i-1;
 								var correct = 0;
 								var incorrect = 0;
 								
 								var data1 = response_res.data;
 								var len1 = data1.length;
-								for(var i = 0;i<len1;i++){
-									if(data1[i].verify == true){
+								for(var j = 0;j<len1;j++){
+									if(data1[j].verify == true){
 										correct++;
 									}else{
 										incorrect++;
 									}
 								}
-								
-								
+								 
 									var r = ra0 + data[i].post_id + ra1 + len1 + ra2 + correct + ra3 + incorrect + ra4 +
 										ra5 +
 										` <img src= "` + `getPostImage?post_id=` + data[i].post_id + `" id="image" alt=" ` + " Image" + ` "> ` +

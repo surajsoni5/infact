@@ -1,5 +1,5 @@
-
-/**
+ 
+/** 
  * Edit to provide your database credentials
  */
 public class Config {
@@ -10,7 +10,7 @@ public class Config {
 	public static final int applicationlimit = 10;
 	public static final int verificationlimit = 10;
 	public static final int Responsethreshold = 10;
-	public static final int threshold = 3;
+	public static final int threshold = 0;
 }
 
 /*

@@ -24,8 +24,8 @@ var r5 = ` </div>
 var r6 = `</div>
 		</div>
       <div class="row User-Option-row">
-      	 <button class = "Mybtn Like_Post" type="button" id="Like_Post" > Like </button>
-      	 <button class = "Mybtn Save_Post" type="button" id="Save_Post" > Save </button>
+      	<!-- <button class = "Mybtn Like_Post" type="button" id="Like_Post" > Like </button> -->
+      	<!-- <button class = "Mybtn Save_Post" type="button" id="Save_Post" > Save </button> -->
 		 <button onclick="viewFunction(this)" class = "Mybtn View_Post" type="button" id="View_Post" value="small"> View </button>
 		  </div>
   </div> `

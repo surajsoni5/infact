@@ -12,8 +12,8 @@ create table posts
 		created_timestamp      timestamp  NOT NULL,
         image			bytea,
         image_metadata varchar(10),
-        body           varchar(3000)  NOT NULL,
-		title          varchar(50)  NOT NULL,
+        body           varchar(30000)  NOT NULL,
+		title          varchar(200)  NOT NULL,
      	author_name        varchar(50)  NOT NULL,
      	primary key (post_id)
 	);
