@@ -83,6 +83,7 @@ $(document).ready(function () {
                             console.log(msg_status);
                             if(msg_status == true){  
                                 console.log("Created Account Sucessfull ");
+//                                window.location.replace('index.html')
                                 // window.location = window.location.protocol + '//' + (start+"index.html");
                                 alert("Created Account Sucessfull");
                             }
@@ -95,7 +96,7 @@ $(document).ready(function () {
         }
     }
 });
-
+       
     function validateEmail(email){
         var re = /\S+@\S+\.\S+/;
         return re.test(String(email).toLowerCase());

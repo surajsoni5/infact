@@ -165,7 +165,7 @@ function reject_post(but){
 			function(data,status){
 				if(status=='success' && data.status){
 					console.log("Rejected "+post_id);
-					console.log(parent.parentNode.parentNode);
+					
 						super_parent.style.display = "none";;//TOdo
 					}else {
 						alert("Error !!");

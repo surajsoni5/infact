@@ -80,7 +80,7 @@ public class Query {
 	public static final String addRejectedposts_query = "with p_id(post_id) as "
 			+ " ( delete from pending_posts where post_id = (?) returning post_id ) "
 			+ " insert into rejected_posts "
-			+ " ( select post_id , user_posts.user_id from p_id,user_posts where user_posts.post_id = p_id );";
+			+ " ( select user_posts.post_id , user_posts.user_id from p_id,user_posts where user_posts.post_id = p_id.post_id );";
 	
 	public static final String getResponsesofPost_query = "select * from responses where post_id = (?) order by response_timestamp  limit (?)";
 	
@@ -99,7 +99,7 @@ public class Query {
 	
 	
 	
-	public static final String addPublishpost_query = "insert into published_posts values (?,?)"; //(post_id and timestamp)
+//	public static final String addPublishpost_query = "insert into published_posts values (?,?)"; //(post_id and timestamp)
 	
 //	public static final String getPendingpostID_query = "select post_id from pending_posts where score < (?) limit (?)"; // (thresh) (limit)
 //	public static final String getPendingposts_query = "select * from posts,pending_posts wheres pending_posts.post_id = posts.post_id ";
